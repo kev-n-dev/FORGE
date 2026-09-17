@@ -106,6 +106,7 @@ export async function recalculateReputationLevel(
   let earnedLevel = ReputationLevel.New;
   for (const levelNum of [6, 5, 4, 3, 2] as ReputationLevel[]) {
     const req = LEVEL_REQUIREMENTS[levelNum];
+    if (!req) continue;
     const ratingOk =
       req.minRating === null ||
       (profile.average_rating !== null && profile.average_rating >= req.minRating);
@@ -120,7 +121,7 @@ export async function recalculateReputationLevel(
     }
   }
 
-  const levelName = LEVEL_NAMES[earnedLevel];
+  const levelName = LEVEL_NAMES[earnedLevel] ?? "New";
 
   await dbRun(
     db,

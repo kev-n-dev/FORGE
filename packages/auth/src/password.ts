@@ -58,7 +58,9 @@ export async function verifyPassword(plaintext: string, stored: string): Promise
   const iterations = parseInt(iterStr ?? "0", 10);
   if (!iterStr || !saltB64 || !hashB64 || iterations < 1) return false;
 
-  const salt = fromBase64(saltB64);
+  // Cast to ArrayBuffer to satisfy BufferSource — Uint8Array<ArrayBufferLike>
+  // is not assignable to BufferSource in strict TS 5.5+ with DOM lib.
+  const salt = fromBase64(saltB64).buffer as ArrayBuffer;
   const expectedHash = fromBase64(hashB64);
 
   let keyMaterial: CryptoKey;

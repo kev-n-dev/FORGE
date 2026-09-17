@@ -143,21 +143,21 @@ export const api = {
   post: <T>(path: string, body?: unknown, opts?: RequestOptions) =>
     apiFetch<T>(path, {
       method: "POST",
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: body !== undefined ? JSON.stringify(body) : null,
       ...opts,
     }),
 
   put: <T>(path: string, body?: unknown, opts?: RequestOptions) =>
     apiFetch<T>(path, {
       method: "PUT",
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: body !== undefined ? JSON.stringify(body) : null,
       ...opts,
     }),
 
   patch: <T>(path: string, body?: unknown, opts?: RequestOptions) =>
     apiFetch<T>(path, {
       method: "PATCH",
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body: body !== undefined ? JSON.stringify(body) : null,
       ...opts,
     }),
 
