@@ -1,0 +1,15 @@
+# FORGE Code Owners
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global ownership
+* @forge-team
+
+# Security-sensitive paths require senior review
+packages/auth/ @forge-security
+apps/worker/src/middleware/ @forge-security
+apps/worker/src/routes/admin.ts @forge-security
+migrations/ @forge-security
+
+# Infrastructure
+wrangler.toml @forge-infra
+.github/ @forge-infra

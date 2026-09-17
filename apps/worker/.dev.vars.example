@@ -1,0 +1,8 @@
+# Cloudflare Worker local development secrets
+# Copy to .dev.vars (gitignored) for wrangler dev
+# https://developers.cloudflare.com/workers/testing/local-development/#secrets
+
+AUTH_SECRET=local-dev-secret-replace-with-32-char-minimum
+TURNSTILE_SECRET=1x0000000000000000000000000000000AA
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
+MEDIA_BASE_URL=http://localhost:8787

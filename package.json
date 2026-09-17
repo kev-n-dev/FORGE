@@ -1,0 +1,31 @@
+{
+  "name": "forge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FORGE — The professional network for people who make, build and create.",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev": "pnpm -r --parallel run dev",
+    "lint": "pnpm -r run lint",
+    "lint:fix": "pnpm -r run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml,css}\" --ignore-path .prettierignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,yaml,yml,css}\" --ignore-path .prettierignore",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "test:e2e": "playwright test",
+    "migrate:local": "pnpm --filter @forge/database run migrate:local",
+    "migrate:remote": "pnpm --filter @forge/database run migrate:remote",
+    "seed:local": "pnpm --filter @forge/database run seed:local",
+    "clean": "pnpm -r run clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  },
+  "packageManager": "pnpm@9.9.0"
+}
