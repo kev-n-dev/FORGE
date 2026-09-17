@@ -1,8 +1,29 @@
 # FORGE — Cloudflare Workers configuration
 # https://developers.cloudflare.com/workers/wrangler/configuration/
 #
-# Secrets (AUTH_SECRET, TURNSTILE_SECRET, etc.) are NEVER stored here.
-# Set them via: wrangler secret put <NAME>
+# HOW TO FILL THIS IN:
+#   1. Run: wrangler d1 create forge-db
+#      Copy the database_id into the [d1_databases] sections below.
+#
+#   2. Run: wrangler kv namespace create SESSION_KV
+#      Run: wrangler kv namespace create SESSION_KV --preview
+#      Run: wrangler kv namespace create CACHE_KV
+#      Run: wrangler kv namespace create CACHE_KV --preview
+#      Copy the ids into the [kv_namespaces] sections below.
+#
+#   3. Run: wrangler r2 bucket create forge-media
+#      Run: wrangler r2 bucket create forge-private
+#      (Bucket names only — no ID needed in this file)
+#
+#   4. Set secrets (never stored here):
+#      wrangler secret put AUTH_SECRET
+#      wrangler secret put TURNSTILE_SECRET
+#
+# Secrets are set per environment:
+#   wrangler secret put AUTH_SECRET --env staging
+#   wrangler secret put AUTH_SECRET --env production
+#
+# For local development, put secrets in apps/worker/.dev.vars (gitignored).
 
 name = "forge-worker"
 main = "apps/worker/src/index.ts"
@@ -10,17 +31,17 @@ compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # ---------------------------------------------------------------------------
-# D1 Databases
+# Top-level bindings — used by `wrangler dev` (local) when no --env is given.
+# For local dev, wrangler uses local D1/KV/R2 simulation; remote IDs are only
+# needed when deploying or running --remote.
 # ---------------------------------------------------------------------------
+
 [[d1_databases]]
 binding = "DB"
 database_name = "forge-db"
 database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
 migrations_dir = "migrations"
 
-# ---------------------------------------------------------------------------
-# KV Namespaces
-# ---------------------------------------------------------------------------
 [[kv_namespaces]]
 binding = "SESSION_KV"
 id = "REPLACE_WITH_SESSION_KV_ID"
@@ -31,9 +52,6 @@ binding = "CACHE_KV"
 id = "REPLACE_WITH_CACHE_KV_ID"
 preview_id = "REPLACE_WITH_CACHE_KV_PREVIEW_ID"
 
-# ---------------------------------------------------------------------------
-# R2 Buckets
-# ---------------------------------------------------------------------------
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
 bucket_name = "forge-media"
@@ -43,85 +61,57 @@ binding = "PRIVATE_BUCKET"
 bucket_name = "forge-private"
 
 # ---------------------------------------------------------------------------
-# Queues
+# Queues — uncomment when Phase 2 (Jobs / Messaging) is ready.
+# Create first: wrangler queues create forge-notifications
+#               wrangler queues create forge-moderation
 # ---------------------------------------------------------------------------
-[[queues.producers]]
-binding = "NOTIFICATION_QUEUE"
-queue = "forge-notifications"
-
-[[queues.producers]]
-binding = "MODERATION_QUEUE"
-queue = "forge-moderation"
-
-[[queues.consumers]]
-queue = "forge-notifications"
-max_batch_size = 10
-max_batch_timeout = 5
-max_retries = 3
-dead_letter_queue = "forge-notifications-dlq"
-
-[[queues.consumers]]
-queue = "forge-moderation"
-max_batch_size = 5
-max_batch_timeout = 10
-max_retries = 3
-
-# ---------------------------------------------------------------------------
-# Cron Triggers
-# ---------------------------------------------------------------------------
-[triggers]
-crons = [
-  # Cleanup expired tokens daily at 3am UTC
-  "0 3 * * *",
-  # Reputation recalculation weekly on Sunday at 2am UTC
-  "0 2 * * 0",
-]
+# [[queues.producers]]
+# binding = "NOTIFICATION_QUEUE"
+# queue = "forge-notifications"
+#
+# [[queues.producers]]
+# binding = "MODERATION_QUEUE"
+# queue = "forge-moderation"
+#
+# [[queues.consumers]]
+# queue = "forge-notifications"
+# max_batch_size = 10
+# max_batch_timeout = 5
+# max_retries = 3
+# dead_letter_queue = "forge-notifications-dlq"
+#
+# [[queues.consumers]]
+# queue = "forge-moderation"
+# max_batch_size = 5
+# max_batch_timeout = 10
+# max_retries = 3
 
 # ---------------------------------------------------------------------------
-# Environment variables (non-secret — safe to commit)
+# Cron Triggers — uncomment when background jobs are implemented.
+# ---------------------------------------------------------------------------
+# [triggers]
+# crons = [
+#   "0 3 * * *",   # Cleanup expired tokens — daily at 3am UTC
+#   "0 2 * * 0",   # Reputation recalculation — weekly Sunday 2am UTC
+# ]
+
+# ---------------------------------------------------------------------------
+# Non-secret vars (safe to commit — no credentials here)
 # ---------------------------------------------------------------------------
 [vars]
 ENVIRONMENT = "development"
-MEDIA_BASE_URL = "https://media.forge.example.com"
+MEDIA_BASE_URL = "http://localhost:8787"
+# Replace with your actual Turnstile site key from the Cloudflare dashboard.
+# The value below is Cloudflare's always-pass test key, safe for development.
 TURNSTILE_SITE_KEY = "1x00000000000000000000AA"
 
 # ---------------------------------------------------------------------------
-# Development environment overrides
-# ---------------------------------------------------------------------------
-[env.development]
-name = "forge-worker-dev"
-vars = { ENVIRONMENT = "development", MEDIA_BASE_URL = "http://localhost:8787/dev-media" }
-
-[[env.development.d1_databases]]
-binding = "DB"
-database_name = "forge-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
-migrations_dir = "migrations"
-
-[[env.development.kv_namespaces]]
-binding = "SESSION_KV"
-id = "REPLACE_WITH_SESSION_KV_ID"
-preview_id = "REPLACE_WITH_SESSION_KV_PREVIEW_ID"
-
-[[env.development.kv_namespaces]]
-binding = "CACHE_KV"
-id = "REPLACE_WITH_CACHE_KV_ID"
-preview_id = "REPLACE_WITH_CACHE_KV_PREVIEW_ID"
-
-[[env.development.r2_buckets]]
-binding = "MEDIA_BUCKET"
-bucket_name = "forge-media-dev"
-
-[[env.development.r2_buckets]]
-binding = "PRIVATE_BUCKET"
-bucket_name = "forge-private-dev"
-
-# ---------------------------------------------------------------------------
 # Staging environment
+# Deploy with: wrangler deploy --env staging
 # ---------------------------------------------------------------------------
 [env.staging]
 name = "forge-worker-staging"
-vars = { ENVIRONMENT = "staging", MEDIA_BASE_URL = "https://media.staging.forge.example.com" }
+vars = { ENVIRONMENT = "staging", MEDIA_BASE_URL = "https://media.staging.forge.example.com", TURNSTILE_SITE_KEY = "REPLACE_WITH_STAGING_TURNSTILE_SITE_KEY" }
 
 [[env.staging.d1_databases]]
 binding = "DB"
@@ -149,11 +139,14 @@ bucket_name = "forge-private-staging"
 
 # ---------------------------------------------------------------------------
 # Production environment
+# Deploy with: wrangler deploy --env production
+#
+# Update the route pattern once you have a real domain pointed at Cloudflare.
 # ---------------------------------------------------------------------------
 [env.production]
 name = "forge-worker"
-vars = { ENVIRONMENT = "production", MEDIA_BASE_URL = "https://media.forge.example.com" }
-routes = [{ pattern = "forge.example.com/api/*", zone_name = "forge.example.com" }]
+vars = { ENVIRONMENT = "production", MEDIA_BASE_URL = "https://media.forge.example.com", TURNSTILE_SITE_KEY = "REPLACE_WITH_PRODUCTION_TURNSTILE_SITE_KEY" }
+# routes = [{ pattern = "forge.example.com/api/*", zone_name = "forge.example.com" }]
 
 [[env.production.d1_databases]]
 binding = "DB"
@@ -178,11 +171,3 @@ bucket_name = "forge-media"
 [[env.production.r2_buckets]]
 binding = "PRIVATE_BUCKET"
 bucket_name = "forge-private"
-
-[[env.production.queues.producers]]
-binding = "NOTIFICATION_QUEUE"
-queue = "forge-notifications"
-
-[[env.production.queues.producers]]
-binding = "MODERATION_QUEUE"
-queue = "forge-moderation"
