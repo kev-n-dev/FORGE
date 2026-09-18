@@ -25,7 +25,7 @@
 #
 # For local development, put secrets in apps/worker/.dev.vars (gitignored).
 
-name = "forge-worker"
+name = "forge"
 main = "apps/worker/src/index.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
@@ -110,7 +110,7 @@ TURNSTILE_SITE_KEY = "1x00000000000000000000AA"
 # Deploy with: wrangler deploy --env staging
 # ---------------------------------------------------------------------------
 [env.staging]
-name = "forge-worker-staging"
+name = "forge-staging"
 vars = { ENVIRONMENT = "staging", MEDIA_BASE_URL = "https://media.staging.forge.example.com", TURNSTILE_SITE_KEY = "REPLACE_WITH_STAGING_TURNSTILE_SITE_KEY" }
 
 [[env.staging.d1_databases]]
