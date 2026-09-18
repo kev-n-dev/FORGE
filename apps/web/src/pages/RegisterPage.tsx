@@ -82,7 +82,7 @@ export function RegisterPage() {
                   <button
                     key={value}
                     type="button"
-                    onClick={() => setValue("role", value)}
+                    onClick={() => setValue("role", value as UserRole.Customer | UserRole.Professional)}
                     className={cn(
                       "flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all duration-150",
                       selectedRole === value
