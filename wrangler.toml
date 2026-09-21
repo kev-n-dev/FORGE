@@ -39,18 +39,18 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "forge-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "006bac57-03c4-4a34-9c66-753f9b95bfb4"
 migrations_dir = "migrations"
 
 [[kv_namespaces]]
 binding = "SESSION_KV"
-id = "REPLACE_WITH_SESSION_KV_ID"
-preview_id = "REPLACE_WITH_SESSION_KV_PREVIEW_ID"
+id = "2ff85947790948a095b703cd0bf67295"
+preview_id = "2ff85947790948a095b703cd0bf67295"
 
 [[kv_namespaces]]
 binding = "CACHE_KV"
-id = "REPLACE_WITH_CACHE_KV_ID"
-preview_id = "REPLACE_WITH_CACHE_KV_PREVIEW_ID"
+id = "bddb665f88f84b0bb04b4154e501ab98"
+preview_id = "bddb665f88f84b0bb04b4154e501ab98"
 
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
