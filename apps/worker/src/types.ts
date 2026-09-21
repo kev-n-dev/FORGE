@@ -5,6 +5,9 @@ import type { UserRole } from "@forge/types";
 
 /** Matches the [vars] / bindings in wrangler.toml */
 export interface Env {
+  // Static Assets (React frontend)
+  ASSETS: Fetcher;
+
   // D1 Database
   DB: D1Database;
 

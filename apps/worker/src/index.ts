@@ -1,6 +1,11 @@
 /**
  * FORGE API Worker — Cloudflare Workers entry point.
  * Built with Hono for lightweight, edge-native routing.
+ *
+ * Architecture:
+ *   /api/*   → Hono API routes (Worker logic)
+ *   /health  → Health check
+ *   /*       → Static assets (React frontend via Workers Static Assets)
  */
 
 import { Hono } from "hono";
@@ -24,16 +29,13 @@ const app = new Hono<{ Bindings: Env; Variables: HonoVariables }>();
 // Global middleware
 // ---------------------------------------------------------------------------
 
-// CORS — must run before auth
 app.use("*", async (c, next) => {
   const corsMw = buildCors(c.env);
   return corsMw(c, next);
 });
 
-// Request ID for tracing
 app.use("*", requestId);
 
-// Security headers
 app.use(
   "*",
   secureHeaders({
@@ -60,11 +62,10 @@ app.use(
   })
 );
 
-// Development request logger
 app.use("*", logger());
 
 // ---------------------------------------------------------------------------
-// Health check (no auth)
+// Health check
 // ---------------------------------------------------------------------------
 app.get("/health", (c) =>
   c.json({ status: "ok", service: "forge-api", timestamp: new Date().toISOString() })
@@ -82,11 +83,25 @@ app.route("/api/search", searchRouter);
 app.route("/api/admin", adminRouter);
 
 // ---------------------------------------------------------------------------
-// 404 handler
+// Frontend — fall through to static assets for all non-API routes.
+// This serves the React SPA and handles client-side routing (all paths
+// return index.html so TanStack Router can take over).
 // ---------------------------------------------------------------------------
-app.notFound((c) =>
-  c.json({ success: false, error: { code: "NOT_FOUND", message: "Route not found." } }, 404)
-);
+app.get("*", async (c) => {
+  // ASSETS binding is provided by Workers Static Assets ([assets] in wrangler.toml)
+  const url = new URL(c.req.url);
+
+  // Try the exact path first (JS, CSS, images, etc.)
+  let response = await c.env.ASSETS.fetch(c.req.raw);
+
+  // For non-file paths (no extension), serve index.html so the SPA router works
+  if (response.status === 404 && !url.pathname.includes(".")) {
+    const indexUrl = new URL("/index.html", url.origin);
+    response = await c.env.ASSETS.fetch(new Request(indexUrl));
+  }
+
+  return response;
+});
 
 // ---------------------------------------------------------------------------
 // Global error handler
