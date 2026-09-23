@@ -345,4 +345,18 @@ auth.post("/change-password", requireAuth, async (c) => {
   return ok(c, { message: "Password changed successfully. Please log in again." });
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/auth/me — return current user from access token
+// ---------------------------------------------------------------------------
+auth.get("/me", requireAuth, async (c) => {
+  const user = await findUserById(c.env.DB, c.get("userId"));
+  if (!user) return err(c, "NOT_FOUND", "User not found.", 404);
+  return ok(c, {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    emailVerified: user.email_verified === 1,
+  });
+});
+
 export { auth as authRouter };

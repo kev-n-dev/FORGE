@@ -146,7 +146,7 @@ export function RegisterPage() {
               error={errors.confirmPassword?.message}
             />
 
-            <input type="hidden" {...register("turnstileToken")} value="dev-bypass-token" />
+            <input type="hidden" {...register("turnstileToken")} value="XXXX.DUMMY.TOKEN.XXXX" />
 
             <p className="text-xs text-charcoal-500 leading-relaxed">
               By creating an account you agree to our Terms of Service and Privacy Policy.

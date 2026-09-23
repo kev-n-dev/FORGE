@@ -87,11 +87,11 @@ export function LoginPage() {
             />
 
             {/* Hidden Turnstile field — replace with actual widget in production */}
-            <input type="hidden" {...register("turnstileToken")} value="dev-bypass-token" />
+            <input type="hidden" {...register("turnstileToken")} value="XXXX.DUMMY.TOKEN.XXXX" />
 
             <div className="flex items-center justify-between">
               <Link
-                to="/"
+                to="/forgot-password"
                 className="text-sm text-copper-400 hover:text-copper-300 transition-colors"
               >
                 Forgot password?

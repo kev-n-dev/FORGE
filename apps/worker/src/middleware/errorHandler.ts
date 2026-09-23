@@ -44,14 +44,19 @@ export const globalErrorHandler: ErrorHandler<{
     return c.json(body, 429);
   }
 
-  // Unexpected error — log internally, return generic message
+  // Unexpected error — log internally
   console.error(`[${requestId}] Unhandled error:`, error);
+
+  // Include real error message to aid debugging — remove before go-live
+  const message = error instanceof Error
+    ? `${error.message} (${error.constructor.name})`
+    : "An unexpected error occurred. Please try again.";
 
   const body: ApiError = {
     success: false,
     error: {
       code: "INTERNAL_ERROR",
-      message: "An unexpected error occurred. Please try again.",
+      message,
     },
   };
   return c.json(body, 500);

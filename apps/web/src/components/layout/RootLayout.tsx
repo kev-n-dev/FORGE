@@ -15,14 +15,14 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
   if (isLoading) return <FullPageSpinner />;
 
   const navLinks = [
-    { href: "/discover", label: "Discover", icon: Search },
-    { href: "/jobs", label: "Jobs", icon: Briefcase },
+    { to: "/discover", label: "Discover", icon: Search },
+    { to: "/jobs", label: "Jobs", icon: Briefcase },
   ];
 
   const authLinks = isAuthenticated
     ? [
-        { href: "/messages", label: "Messages", icon: MessageSquare },
-        { href: "/dashboard", label: "Dashboard", icon: User },
+        { to: "/messages", label: "Messages", icon: MessageSquare },
+        { to: "/dashboard", label: "Dashboard", icon: User },
       ]
     : [];
 
@@ -55,13 +55,13 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
               className="hidden md:flex items-center gap-1"
               aria-label="Main navigation"
             >
-              {[...navLinks, ...authLinks].map(({ href, label, icon: Icon }) => (
+              {[...navLinks, ...authLinks].map(({ to, label, icon: Icon }) => (
                 <Link
-                  key={href}
-                  to={href}
+                  key={to}
+                  to={to}
                   className={cn(
                     "flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                    routerState.location.pathname === href
+                    routerState.location.pathname === to
                       ? "bg-charcoal-800 text-charcoal-50"
                       : "text-charcoal-400 hover:text-charcoal-50 hover:bg-charcoal-800"
                   )}
@@ -86,7 +86,12 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
             <div className="hidden md:flex items-center gap-3">
               {isAuthenticated && user ? (
                 <div className="flex items-center gap-3">
-                  <Avatar src={null} name={user.email} size="sm" />
+                  <Link to="/settings">
+                    <Avatar src={null} name={user.email} size="sm" />
+                  </Link>
+                  <Link to="/settings" className="text-sm text-charcoal-400 hover:text-charcoal-50 transition-colors">
+                    {user.email.split("@")[0]}
+                  </Link>
                   <button
                     onClick={() => void logout()}
                     className="text-sm text-charcoal-400 hover:text-charcoal-50 transition-colors"
@@ -130,10 +135,10 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-charcoal-800 bg-charcoal-950 animate-slide-up">
             <nav className="px-4 py-4 space-y-1" aria-label="Mobile navigation">
-              {[...navLinks, ...authLinks].map(({ href, label, icon: Icon }) => (
+              {[...navLinks, ...authLinks].map(({ to, label, icon: Icon }) => (
                 <Link
-                  key={href}
-                  to={href}
+                  key={to}
+                  to={to}
                   className="flex items-center gap-3 px-4 py-3 rounded-lg text-charcoal-300 hover:bg-charcoal-800 hover:text-charcoal-50 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -183,9 +188,9 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
               professional.
             </p>
             <nav className="flex gap-4 text-sm text-charcoal-500" aria-label="Footer navigation">
-              <Link to="/" className="hover:text-charcoal-300 transition-colors">Safety Center</Link>
-              <Link to="/" className="hover:text-charcoal-300 transition-colors">Privacy</Link>
-              <Link to="/" className="hover:text-charcoal-300 transition-colors">Terms</Link>
+              <Link to="/safety" className="hover:text-charcoal-300 transition-colors">Safety Center</Link>
+              <Link to="/privacy" className="hover:text-charcoal-300 transition-colors">Privacy</Link>
+              <Link to="/terms" className="hover:text-charcoal-300 transition-colors">Terms</Link>
             </nav>
           </div>
         </div>
