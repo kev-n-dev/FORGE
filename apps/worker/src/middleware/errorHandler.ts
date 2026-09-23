@@ -6,9 +6,9 @@ import {
   ValidationError,
   ConflictError,
   RateLimitError,
-} from "@forge/auth";
+} from "@guild/auth";
 import type { Env, HonoVariables } from "../types";
-import type { ApiError } from "@forge/types";
+import type { ApiError } from "@guild/types";
 
 export const globalErrorHandler: ErrorHandler<{
   Bindings: Env;

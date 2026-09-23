@@ -1,6 +1,6 @@
 import { CheckCircle2, Info } from "lucide-react";
 import { StarRating } from "@/components/ui/StarRating";
-import { TRUST_CARD_DISCLAIMER } from "@forge/config";
+import { TRUST_CARD_DISCLAIMER } from "@guild/config";
 
 interface TrustCardData {
   identityVerified: boolean;
@@ -47,7 +47,7 @@ export function TrustCard({ data }: { data: TrustCardData }) {
 
   return (
     <section
-      className="forge-card p-5 space-y-4"
+      className="guild-card p-5 space-y-4"
       aria-labelledby="trust-card-heading"
     >
       <h2
@@ -72,7 +72,7 @@ export function TrustCard({ data }: { data: TrustCardData }) {
         </ul>
       ) : (
         <p className="text-sm text-charcoal-400">
-          This professional is new to FORGE. No evidence available yet.
+          This professional is new to The Guild. No evidence available yet.
         </p>
       )}
 

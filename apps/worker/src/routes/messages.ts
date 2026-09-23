@@ -25,13 +25,13 @@ import {
   getTotalUnreadCount,
   findProfessionalByUserId,
   findUserById,
-} from "@forge/database";
-import { NotFoundError, AuthorizationError } from "@forge/auth";
+} from "@guild/database";
+import { NotFoundError, AuthorizationError } from "@guild/auth";
 import type { Env, HonoVariables } from "../types";
 import { ok, err, created } from "../utils/response";
 import { requireAuth } from "../middleware/auth";
 import { apiRateLimit } from "../middleware/ratelimit";
-import type { ConversationSummary, Message } from "@forge/types";
+import type { ConversationSummary, Message } from "@guild/types";
 
 const messages = new Hono<{ Bindings: Env; Variables: HonoVariables }>();
 

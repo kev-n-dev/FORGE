@@ -26,7 +26,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: "pnpm --filter @forge/web run preview",
+    command: "pnpm --filter @guild/web run preview",
     url: "http://localhost:5173",
     reuseExistingServer: !process.env["CI"],
   },

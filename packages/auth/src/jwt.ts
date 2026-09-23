@@ -6,7 +6,7 @@
  * Tokens are signed with the AUTH_SECRET environment variable.
  */
 
-import type { UserRole } from "@forge/types";
+import type { UserRole } from "@guild/types";
 
 export interface AccessTokenPayload {
   sub: string; // userId

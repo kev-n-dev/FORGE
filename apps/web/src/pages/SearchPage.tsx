@@ -5,7 +5,7 @@ import { ProfessionalCard } from "@/components/search/ProfessionalCard";
 import { Spinner } from "@/components/ui/Spinner";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import type { PaginatedResponse, ProfessionalSearchCard } from "@forge/types";
+import type { PaginatedResponse, ProfessionalSearchCard } from "@guild/types";
 import { Search, SlidersHorizontal, Info } from "lucide-react";
 
 export function SearchPage() {

@@ -75,7 +75,7 @@ export function ReportModal({ open, onClose, targetType, targetId, targetName }:
       {!isAuthenticated ? (
         <div className="space-y-4">
           <p className="text-sm text-charcoal-400">You need to be signed in to submit a report.</p>
-          <Link to="/login" className="forge-btn-primary inline-flex" onClick={handleClose}>
+          <Link to="/login" className="guild-btn-primary inline-flex" onClick={handleClose}>
             Sign in
           </Link>
         </div>
@@ -95,11 +95,11 @@ export function ReportModal({ open, onClose, targetType, targetId, targetName }:
             </div>
           )}
           <div>
-            <label className="forge-label">Reason</label>
+            <label className="guild-label">Reason</label>
             <select
               value={reason}
               onChange={(e) => setReason(e.target.value as ReportReason)}
-              className="forge-input mt-1.5"
+              className="guild-input mt-1.5"
             >
               <option value="">Select a reason…</option>
               {REASONS.map((r) => (
@@ -108,7 +108,7 @@ export function ReportModal({ open, onClose, targetType, targetId, targetName }:
             </select>
           </div>
           <div>
-            <label className="forge-label">
+            <label className="guild-label">
               Description
               <span className="text-charcoal-500 font-normal ml-1">(min 10 characters)</span>
             </label>
@@ -117,7 +117,7 @@ export function ReportModal({ open, onClose, targetType, targetId, targetName }:
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
               placeholder="Describe what happened…"
-              className="forge-input resize-none mt-1.5"
+              className="guild-input resize-none mt-1.5"
             />
           </div>
           <div className="flex gap-3 justify-end">

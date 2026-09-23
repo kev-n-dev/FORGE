@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserRole } from "@forge/types";
+import { UserRole } from "@guild/types";
 import { zEmail, zPassword, zTurnstileToken } from "./common";
 
 export const LoginSchema = z.object({

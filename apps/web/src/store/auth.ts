@@ -3,7 +3,7 @@
  * Uses a simple pub/sub pattern compatible with React's useSyncExternalStore.
  */
 
-import type { UserRole } from "@forge/types";
+import type { UserRole } from "@guild/types";
 import { setTokens, clearTokens, restoreRefreshToken } from "@/lib/api";
 
 export interface AuthUser {
@@ -73,6 +73,6 @@ export const authStore = {
 };
 
 // Listen for session expiry events from the API client
-window.addEventListener("forge:session-expired", () => {
+window.addEventListener("guild:session-expired", () => {
   authStore.logout();
 });

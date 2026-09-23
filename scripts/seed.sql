@@ -1,4 +1,4 @@
--- FORGE Development Seed Data
+-- The Guild Development Seed Data
 -- All data is FICTIONAL and intended for development/testing only.
 -- Run: pnpm seed:local
 --
@@ -31,9 +31,9 @@ INSERT OR IGNORE INTO categories (id, name, slug, description, parent_id, sort_o
 -- Achievements (platform milestones)
 -- ---------------------------------------------------------------------------
 INSERT OR IGNORE INTO achievements (id, code, name, description, icon, category, sort_order) VALUES
-  ('ach-100-jobs',  '100_verified_jobs',   '100 Verified Jobs',     'Completed 100 verified jobs on FORGE', '🏆', 'jobs', 0),
+  ('ach-100-jobs',  '100_verified_jobs',   '100 Verified Jobs',     'Completed 100 verified jobs on The Guild', '🏆', 'jobs', 0),
   ('ach-50-5star',  '50_five_star',        '50 Five-Star Reviews',  'Received 50 five-star reviews',        '⭐', 'reviews', 1),
-  ('ach-1yr',       '1_year_member',       '1 Year on FORGE',       'Active member for one year',           '🔥', 'milestones', 2),
+  ('ach-1yr',       '1_year_member',       '1 Year on The Guild',       'Active member for one year',           '🔥', 'milestones', 2),
   ('ach-mentor',    'community_mentor',    'Community Mentor',      'Offered mentorship to other professionals', '🤝', 'community', 3),
   ('ach-100-orders','100_orders',          '100 Orders',            'Fulfilled 100 product orders',         '📦', 'marketplace', 4),
   ('ach-50-projects','50_projects',        '50 Completed Projects', 'Published 50 portfolio projects',      '🛠', 'portfolio', 5);

@@ -18,7 +18,7 @@ const PAGES: Record<string, StaticPageConfig> = {
     sections: [
       {
         heading: "Avoiding scams",
-        body: "Never pay a deposit outside of an agreed quote. Be wary of professionals who ask for full payment upfront before any work begins. Use FORGE messaging to keep a record of all communications.",
+        body: "Never pay a deposit outside of an agreed quote. Be wary of professionals who ask for full payment upfront before any work begins. Use The Guild messaging to keep a record of all communications.",
       },
       {
         heading: "Understanding verification",
@@ -26,7 +26,7 @@ const PAGES: Record<string, StaticPageConfig> = {
       },
       {
         heading: "Safe communication",
-        body: "Use FORGE messaging to communicate with professionals. Avoid sharing your home address until you have agreed to hire someone. Never share financial account details.",
+        body: "Use The Guild messaging to communicate with professionals. Avoid sharing your home address until you have agreed to hire someone. Never share financial account details.",
       },
       {
         heading: "Reporting users",
@@ -52,7 +52,7 @@ const PAGES: Record<string, StaticPageConfig> = {
       },
       {
         heading: "How we use it",
-        body: "We use your information to operate FORGE, connect customers with professionals, display your profile publicly (if you choose), and send relevant notifications.",
+        body: "We use your information to operate The Guild, connect customers with professionals, display your profile publicly (if you choose), and send relevant notifications.",
       },
       {
         heading: "What we don't do",
@@ -73,8 +73,8 @@ const PAGES: Record<string, StaticPageConfig> = {
     icon: FileText,
     sections: [
       {
-        heading: "Using FORGE",
-        body: "FORGE is a platform that connects customers with skilled professionals. We facilitate discovery, reputation, and communication — but we are not a party to any agreement between customers and professionals.",
+        heading: "Using The Guild",
+        body: "The Guild is a platform that connects customers with skilled professionals. We facilitate discovery, reputation, and communication — but we are not a party to any agreement between customers and professionals.",
       },
       {
         heading: "Accurate information",
@@ -86,15 +86,15 @@ const PAGES: Record<string, StaticPageConfig> = {
       },
       {
         heading: "No guarantee",
-        body: "FORGE provides information and tools to help you make decisions. We do not guarantee the quality of any professional's work or conduct. Platform levels and verification badges are not endorsements.",
+        body: "The Guild provides information and tools to help you make decisions. We do not guarantee the quality of any professional's work or conduct. Platform levels and verification badges are not endorsements.",
       },
       {
         heading: "Prohibited conduct",
-        body: "You may not use FORGE to harass, defraud, or threaten other users. Spam, fake accounts, and automated scraping are prohibited.",
+        body: "You may not use The Guild to harass, defraud, or threaten other users. Spam, fake accounts, and automated scraping are prohibited.",
       },
       {
         heading: "Changes",
-        body: "We may update these terms as the platform evolves. Continued use of FORGE after changes are published constitutes acceptance.",
+        body: "We may update these terms as the platform evolves. Continued use of The Guild after changes are published constitutes acceptance.",
       },
     ],
   },
@@ -117,7 +117,7 @@ export function StaticPage({ page }: { page: "safety" | "privacy" | "terms" }) {
 
       <div className="space-y-6">
         {config.sections.map((section) => (
-          <div key={section.heading} className="forge-card p-6 space-y-2">
+          <div key={section.heading} className="guild-card p-6 space-y-2">
             <h2 className="font-semibold text-charcoal-100">{section.heading}</h2>
             <p className="text-charcoal-400 leading-relaxed text-sm">{section.body}</p>
           </div>
@@ -125,7 +125,7 @@ export function StaticPage({ page }: { page: "safety" | "privacy" | "terms" }) {
       </div>
 
       <p className="text-xs text-charcoal-600">
-        Questions? Contact us at support@forge.example.com
+        Questions? Contact us at support@theguild.example.com
       </p>
     </div>
   );

@@ -91,7 +91,7 @@ export function AdminDashboardPage() {
       {/* Stats */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {stats.map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="forge-card p-5 space-y-3">
+          <div key={label} className="guild-card p-5 space-y-3">
             <Icon className={`h-6 w-6 ${color}`} aria-hidden="true" />
             <div>
               <p className="text-2xl font-bold text-charcoal-50">{value}</p>
@@ -111,14 +111,14 @@ export function AdminDashboardPage() {
         {reportsLoading ? (
           <div className="flex justify-center py-10"><Spinner /></div>
         ) : !reports || reports.length === 0 ? (
-          <div className="forge-card p-8 text-center">
+          <div className="guild-card p-8 text-center">
             <CheckCircle2 className="h-10 w-10 text-green-400 mx-auto mb-3" aria-hidden="true" />
             <p className="text-charcoal-400">No open reports. Queue is clear.</p>
           </div>
         ) : (
           <div className="space-y-3">
             {reports.map((r) => (
-              <div key={r.id} className="forge-card p-5">
+              <div key={r.id} className="guild-card p-5">
                 <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                   <div className="flex-1 min-w-0 space-y-2">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -219,7 +219,7 @@ export function AdminDashboardPage() {
         {usersLoading ? (
           <div className="flex justify-center py-10"><Spinner /></div>
         ) : (
-          <div className="forge-card overflow-hidden">
+          <div className="guild-card overflow-hidden">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-charcoal-800">
@@ -258,7 +258,7 @@ export function AdminDashboardPage() {
       </div>
 
       {/* Audit reminders */}
-      <div className="forge-card p-5">
+      <div className="guild-card p-5">
         <h2 className="text-base font-semibold text-charcoal-100 mb-3 flex items-center gap-2">
           <FileText className="h-4 w-4 text-charcoal-400" aria-hidden="true" />
           Audit reminders

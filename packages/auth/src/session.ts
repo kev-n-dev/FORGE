@@ -6,7 +6,7 @@
  * All previous refresh tokens for a session are invalidated on rotation.
  */
 
-import type { UserRole } from "@forge/types";
+import type { UserRole } from "@guild/types";
 
 export interface SessionData {
   userId: string;

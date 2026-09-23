@@ -1,4 +1,4 @@
-import type { ApiError, ApiSuccess, PaginatedResponse, PaginationMeta } from "@forge/types";
+import type { ApiError, ApiSuccess, PaginatedResponse, PaginationMeta } from "@guild/types";
 import type { Context } from "hono";
 import type { Env, HonoVariables } from "../types";
 

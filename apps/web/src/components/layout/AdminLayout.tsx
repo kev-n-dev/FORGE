@@ -1,6 +1,6 @@
 import { Outlet, Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
-import { UserRole } from "@forge/types";
+import { UserRole } from "@guild/types";
 import { Users, Flag, FileText, ShieldAlert, Settings, BarChart2, ToggleLeft } from "lucide-react";
 
 export function AdminLayout() {

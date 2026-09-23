@@ -6,8 +6,8 @@ import { Spinner } from "@/components/ui/Spinner";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { StarRating } from "@/components/ui/StarRating";
-import { UserRole } from "@forge/types";
-import type { ProfessionalProfile } from "@forge/types";
+import { UserRole } from "@guild/types";
+import type { ProfessionalProfile } from "@guild/types";
 import {
   Briefcase, Package, MessageSquare, Star, TrendingUp, Settings,
   Edit3, Eye, ShieldCheck, Heart, FileText, PlusCircle, CheckCircle2,
@@ -42,7 +42,7 @@ function ProfessionalDashboard() {
         <p className="text-charcoal-400">
           Set up your professional profile to start getting discovered.
         </p>
-        <Link to="/profile/setup" className="forge-btn-primary inline-flex">
+        <Link to="/profile/setup" className="guild-btn-primary inline-flex">
           Set up profile
         </Link>
       </div>
@@ -61,7 +61,7 @@ function ProfessionalDashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Profile header */}
-      <div className="forge-card p-6">
+      <div className="guild-card p-6">
         <div className="flex flex-col sm:flex-row items-start gap-5">
           <Avatar src={profile.avatarUrl} name={profile.displayName} size="xl" />
           <div className="flex-1 min-w-0">
@@ -87,12 +87,12 @@ function ProfessionalDashboard() {
             <Link
               to="/people/$slug"
               params={{ slug: profile.profileSlug }}
-              className="forge-btn-ghost text-sm"
+              className="guild-btn-ghost text-sm"
             >
               <Eye className="h-4 w-4" aria-hidden="true" />
               View profile
             </Link>
-            <Link to="/profile/edit" className="forge-btn-secondary text-sm">
+            <Link to="/profile/edit" className="guild-btn-secondary text-sm">
               <Edit3 className="h-4 w-4" aria-hidden="true" />
               Edit
             </Link>
@@ -102,8 +102,8 @@ function ProfessionalDashboard() {
 
       {/* New user getting started prompt */}
       {isNew && (
-        <div className="forge-card p-6 border-copper-800 bg-copper-950/20">
-          <h2 className="font-semibold text-charcoal-100 mb-1">Get started on FORGE</h2>
+        <div className="guild-card p-6 border-copper-800 bg-copper-950/20">
+          <h2 className="font-semibold text-charcoal-100 mb-1">Get started on The Guild</h2>
           <p className="text-sm text-charcoal-400 mb-4">
             Complete these steps to start getting discovered by customers.
           </p>
@@ -132,7 +132,7 @@ function ProfessionalDashboard() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="forge-card p-5 space-y-2">
+          <div key={label} className="guild-card p-5 space-y-2">
             <Icon className={`h-5 w-5 ${color}`} aria-hidden="true" />
             <p className="text-xl font-bold text-charcoal-50">{value}</p>
             <p className="text-sm text-charcoal-400">{label}</p>
@@ -189,7 +189,7 @@ function ProfessionalDashboard() {
           <Link
             key={href}
             to={href}
-            className="forge-card p-5 flex items-start gap-4 hover:border-charcoal-700 hover:shadow-card-hover transition-all duration-150"
+            className="guild-card p-5 flex items-start gap-4 hover:border-charcoal-700 hover:shadow-card-hover transition-all duration-150"
           >
             <div className="h-9 w-9 rounded-lg bg-charcoal-800 flex items-center justify-center shrink-0">
               <Icon className={`h-5 w-5 ${color}`} aria-hidden="true" />
@@ -203,7 +203,7 @@ function ProfessionalDashboard() {
       </div>
 
       {/* Availability */}
-      <div className="forge-card p-5 flex items-center justify-between gap-4">
+      <div className="guild-card p-5 flex items-center justify-between gap-4">
         <div>
           <p className="font-medium text-charcoal-100">Availability status</p>
           <p className="text-sm text-charcoal-400 mt-0.5">
@@ -213,7 +213,7 @@ function ProfessionalDashboard() {
             </span>
           </p>
         </div>
-        <Link to="/profile/edit" className="forge-btn-secondary text-sm shrink-0">
+        <Link to="/profile/edit" className="guild-btn-secondary text-sm shrink-0">
           Update
         </Link>
       </div>
@@ -248,7 +248,7 @@ function CustomerDashboard() {
           <Link
             key={href}
             to={href}
-            className="forge-card p-5 flex items-start gap-4 hover:border-charcoal-700 hover:shadow-card-hover transition-all duration-150"
+            className="guild-card p-5 flex items-start gap-4 hover:border-charcoal-700 hover:shadow-card-hover transition-all duration-150"
           >
             <div className="h-9 w-9 rounded-lg bg-charcoal-800 flex items-center justify-center shrink-0">
               <Icon className={`h-5 w-5 ${color}`} aria-hidden="true" />

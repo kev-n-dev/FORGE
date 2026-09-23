@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ProfessionalAvailability } from "@forge/types";
+import { ProfessionalAvailability } from "@guild/types";
 import { zCountryCode, zId, zIsoDate, zSafeText, zUrl, zYearMonth } from "./common";
 
 export const UpdateCustomerProfileSchema = z.object({

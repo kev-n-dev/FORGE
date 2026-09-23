@@ -11,11 +11,11 @@ interface BadgeProps {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  verified: "forge-badge-verified",
-  level: "forge-badge-level",
-  sponsored: "forge-badge-sponsored",
-  availability: "forge-badge bg-blue-900/50 text-blue-300 border border-blue-800",
-  default: "forge-badge bg-charcoal-800 text-charcoal-300 border border-charcoal-700",
+  verified: "guild-badge-verified",
+  level: "guild-badge-level",
+  sponsored: "guild-badge-sponsored",
+  availability: "guild-badge bg-blue-900/50 text-blue-300 border border-blue-800",
+  default: "guild-badge bg-charcoal-800 text-charcoal-300 border border-charcoal-700",
 };
 
 const variantIcons: Partial<Record<BadgeVariant, React.ReactNode>> = {

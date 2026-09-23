@@ -9,9 +9,9 @@ import type { MiddlewareHandler } from "hono";
 export function buildCors(env: Env): MiddlewareHandler<{ Bindings: Env; Variables: HonoVariables }> {
   const allowedOrigins =
     env.ENVIRONMENT === "production"
-      ? ["https://forge.example.com"]
+      ? ["https://theguild.example.com"]
       : env.ENVIRONMENT === "staging"
-        ? ["https://staging.forge.example.com"]
+        ? ["https://staging.theguild.example.com"]
         : ["http://localhost:5173", "http://localhost:4173"];
 
   return cors({

@@ -1,4 +1,4 @@
-# Contributing to FORGE
+# Contributing to The Guild
 
 ## Development Setup
 

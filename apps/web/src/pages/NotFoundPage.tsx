@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Hammer, Search, ArrowRight, Home } from "lucide-react";
+import { Shield, AlertCircle, CheckCircle2, XCircle, Loader2, ArrowLeft, ArrowRight, ChevronRight, ChevronLeft, Home, Search } from "lucide-react";
 
 export function NotFoundPage() {
   const router = useRouterState();
@@ -8,8 +8,8 @@ export function NotFoundPage() {
   // Suggest relevant links based on what the user was trying to reach
   const suggestions = [
     { to: "/discover", label: "Find professionals", icon: Search, description: "Search skilled tradespeople and makers" },
-    { to: "/", label: "Go home", icon: Home, description: "Back to the FORGE homepage" },
-    { to: "/register", label: "Join FORGE", icon: ArrowRight, description: "Create your professional profile" },
+    { to: "/", label: "Go home", icon: Home, description: "Back to the The Guild homepage" },
+    { to: "/register", label: "Join The Guild", icon: ArrowRight, description: "Create your professional profile" },
   ];
 
   return (
@@ -18,14 +18,14 @@ export function NotFoundPage() {
 
         {/* Visual */}
         <div className="text-center mb-12">
-          {/* Stylised 404 with the FORGE hammer motif */}
+          {/* Stylised 404 with the The Guild hammer motif */}
           <div className="relative inline-block mb-6">
             <p className="text-[9rem] font-black text-charcoal-800 leading-none select-none tracking-tighter">
               404
             </p>
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="h-20 w-20 rounded-2xl bg-charcoal-950 border-2 border-charcoal-700 flex items-center justify-center shadow-card">
-                <Hammer className="h-10 w-10 text-copper-500" aria-hidden="true" />
+                <Shield className="h-10 w-10 text-copper-500" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -51,7 +51,7 @@ export function NotFoundPage() {
             <Link
               key={to}
               to={to}
-              className="flex items-center gap-4 forge-card p-4 hover:border-charcoal-700 hover:shadow-card-hover transition-all duration-150 group"
+              className="flex items-center gap-4 guild-card p-4 hover:border-charcoal-700 hover:shadow-card-hover transition-all duration-150 group"
             >
               <div className="h-10 w-10 rounded-lg bg-charcoal-800 border border-charcoal-700 flex items-center justify-center shrink-0 group-hover:border-copper-700 transition-colors">
                 <Icon className="h-5 w-5 text-charcoal-400 group-hover:text-copper-400 transition-colors" aria-hidden="true" />

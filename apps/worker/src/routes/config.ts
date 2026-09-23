@@ -4,9 +4,9 @@
  */
 
 import { Hono } from "hono";
-import { dbAll } from "@forge/database";
-import { parseDbFeatureFlags, resolveFeatureFlags } from "@forge/config";
-import { PLATFORM } from "@forge/config";
+import { dbAll } from "@guild/database";
+import { parseDbFeatureFlags, resolveFeatureFlags } from "@guild/config";
+import { PLATFORM } from "@guild/config";
 import type { Env, HonoVariables } from "../types";
 import { ok } from "../utils/response";
 

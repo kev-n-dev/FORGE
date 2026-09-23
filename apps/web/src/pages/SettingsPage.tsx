@@ -7,7 +7,7 @@ import { api, ApiClientError } from "@/lib/api";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
-import { ChangePasswordSchema, type ChangePasswordInput } from "@forge/validation";
+import { ChangePasswordSchema, type ChangePasswordInput } from "@guild/validation";
 import { Shield, Lock, Trash2, AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/cn";
 
@@ -61,7 +61,7 @@ export function SettingsPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-center gap-4 mb-8">
-        <Link to="/dashboard" className="forge-btn-ghost p-2">
+        <Link to="/dashboard" className="guild-btn-ghost p-2">
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
         </Link>
         <h1 className="text-2xl font-bold text-charcoal-50">Settings</h1>
@@ -92,7 +92,7 @@ export function SettingsPage() {
         <div className="flex-1 min-w-0 space-y-6">
           {/* Account */}
           {section === "account" && (
-            <div className="forge-card p-6 space-y-4">
+            <div className="guild-card p-6 space-y-4">
               <h2 className="font-semibold text-charcoal-100">Account Information</h2>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between py-2 border-b border-charcoal-800">
@@ -120,7 +120,7 @@ export function SettingsPage() {
 
           {/* Security */}
           {section === "security" && (
-            <div className="forge-card p-6 space-y-5">
+            <div className="guild-card p-6 space-y-5">
               <h2 className="font-semibold text-charcoal-100">Change Password</h2>
               {pwSuccess && (
                 <div className="flex items-center gap-3 bg-green-900/30 border border-green-800 rounded-lg p-4 text-sm text-green-300">
@@ -172,7 +172,7 @@ export function SettingsPage() {
 
           {/* Danger zone */}
           {section === "danger" && (
-            <div className="forge-card p-6 space-y-5 border-red-900">
+            <div className="guild-card p-6 space-y-5 border-red-900">
               <h2 className="font-semibold text-red-400">Danger Zone</h2>
               <div className="space-y-4 text-sm text-charcoal-400">
                 <p>
@@ -186,13 +186,13 @@ export function SettingsPage() {
                 </p>
               </div>
               <div className="space-y-3">
-                <label className="forge-label">
+                <label className="guild-label">
                   Type <span className="text-red-400 font-mono">DELETE</span> to confirm
                 </label>
                 <input
                   value={deleteConfirm}
                   onChange={(e) => setDeleteConfirm(e.target.value)}
-                  className="forge-input"
+                  className="guild-input"
                   placeholder="DELETE"
                 />
                 <Button
@@ -200,7 +200,7 @@ export function SettingsPage() {
                   disabled={deleteConfirm !== "DELETE"}
                   onClick={() => {
                     // Account deletion requires a support request in Phase 1
-                    alert("Account deletion requests are handled by support. Please email support@forge.example.com.");
+                    alert("Account deletion requests are handled by support. Please email support@theguild.example.com.");
                   }}
                 >
                   <Trash2 className="h-4 w-4" aria-hidden="true" />

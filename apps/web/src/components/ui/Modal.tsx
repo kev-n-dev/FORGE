@@ -36,7 +36,7 @@ export function Modal({ open, onClose, title, description, children, size = "md"
       aria-labelledby="modal-title"
     >
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} aria-hidden="true" />
-      <div className={cn("relative forge-card w-full p-6 space-y-5 animate-slide-up", sizes[size])}>
+      <div className={cn("relative guild-card w-full p-6 space-y-5 animate-slide-up", sizes[size])}>
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 id="modal-title" className="text-lg font-semibold text-charcoal-100">{title}</h2>

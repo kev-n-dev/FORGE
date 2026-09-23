@@ -13,9 +13,9 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
 import { Avatar } from "@/components/ui/Avatar";
-import { ProfessionalAvailability, UserRole } from "@forge/types";
-import type { ProfessionalProfile } from "@forge/types";
-import { UpdateProfessionalProfileSchema, type UpdateProfessionalProfileInput, AddSkillSchema } from "@forge/validation";
+import { ProfessionalAvailability, UserRole } from "@guild/types";
+import type { ProfessionalProfile } from "@guild/types";
+import { UpdateProfessionalProfileSchema, type UpdateProfessionalProfileInput, AddSkillSchema } from "@guild/validation";
 import { ArrowLeft, CheckCircle2, AlertCircle, Plus, X, Upload } from "lucide-react";
 import { cn } from "@/lib/cn";
 
@@ -138,7 +138,7 @@ export function ProfileEditPage() {
     return (
       <div className="max-w-xl mx-auto px-4 py-20 text-center space-y-4">
         <p className="text-charcoal-400">Profile not found.</p>
-        <Link to="/profile/setup" className="forge-btn-primary inline-flex">Set up profile</Link>
+        <Link to="/profile/setup" className="guild-btn-primary inline-flex">Set up profile</Link>
       </div>
     );
   }
@@ -153,7 +153,7 @@ export function ProfileEditPage() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="flex items-center gap-4 mb-8">
-        <Link to="/dashboard" className="forge-btn-ghost p-2">
+        <Link to="/dashboard" className="guild-btn-ghost p-2">
           <ArrowLeft className="h-5 w-5" aria-hidden="true" />
         </Link>
         <div>
@@ -166,7 +166,7 @@ export function ProfileEditPage() {
           <Link
             to="/people/$slug"
             params={{ slug: profile.profileSlug }}
-            className="forge-btn-ghost text-sm"
+            className="guild-btn-ghost text-sm"
           >
             View public profile
           </Link>
@@ -212,7 +212,7 @@ export function ProfileEditPage() {
           onSubmit={(e) => { void handleSubmit((data) => saveMutation.mutate(data))(e); }}
           className="space-y-6"
         >
-          <div className="forge-card p-6 space-y-5">
+          <div className="guild-card p-6 space-y-5">
             <h2 className="text-base font-semibold text-charcoal-100">Basic Information</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <Input {...register("displayName")} label="Display name" required error={errors.displayName?.message} />
@@ -220,12 +220,12 @@ export function ProfileEditPage() {
             </div>
             <Input {...register("tagline")} label="Tagline" placeholder="e.g. Carpenter · Furniture Maker" error={errors.tagline?.message} />
             <div>
-              <label className="forge-label">About</label>
+              <label className="guild-label">About</label>
               <textarea
                 {...register("bio")}
                 rows={5}
                 placeholder="Describe your experience, specialties, and what makes your work unique…"
-                className="forge-input resize-none"
+                className="guild-input resize-none"
               />
               {errors.bio && <p className="text-sm text-red-400 mt-1">{errors.bio.message}</p>}
             </div>
@@ -233,7 +233,7 @@ export function ProfileEditPage() {
             <Input {...register("websiteUrl")} label="Website URL (optional)" type="url" placeholder="https://" error={errors.websiteUrl?.message} />
           </div>
 
-          <div className="forge-card p-6 space-y-5">
+          <div className="guild-card p-6 space-y-5">
             <h2 className="text-base font-semibold text-charcoal-100">Location</h2>
             <div className="grid sm:grid-cols-3 gap-4">
               <Input {...register("locationCountry")} label="Country code" placeholder="TT" error={errors.locationCountry?.message} />
@@ -243,13 +243,13 @@ export function ProfileEditPage() {
             <Input {...register("serviceAreaDescription")} label="Service area description" placeholder="e.g. Port of Spain, Maraval, Diego Martin" error={errors.serviceAreaDescription?.message} />
           </div>
 
-          <div className="forge-card p-6 space-y-5">
+          <div className="guild-card p-6 space-y-5">
             <h2 className="text-base font-semibold text-charcoal-100">Availability</h2>
             <div>
-              <label className="forge-label">Current availability</label>
+              <label className="guild-label">Current availability</label>
               <select
                 {...register("availability")}
-                className="forge-input mt-1.5"
+                className="guild-input mt-1.5"
               >
                 {AVAILABILITY_OPTIONS.map((o) => (
                   <option key={o.value} value={o.value}>{o.label}</option>
@@ -281,7 +281,7 @@ export function ProfileEditPage() {
           </div>
 
           <div className="flex justify-end gap-3">
-            <Link to="/dashboard" className="forge-btn-secondary">Cancel</Link>
+            <Link to="/dashboard" className="guild-btn-secondary">Cancel</Link>
             <Button
               type="submit"
               loading={saveMutation.isPending}
@@ -295,7 +295,7 @@ export function ProfileEditPage() {
 
       {/* Skills section */}
       {activeSection === "skills" && (
-        <div className="forge-card p-6 space-y-5">
+        <div className="guild-card p-6 space-y-5">
           <h2 className="text-base font-semibold text-charcoal-100">Skills</h2>
           <div className="flex gap-2">
             <input
@@ -303,7 +303,7 @@ export function ProfileEditPage() {
               onChange={(e) => setNewSkill(e.target.value)}
               onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleAddSkill(); }}}
               placeholder="Add a skill…"
-              className="forge-input flex-1"
+              className="guild-input flex-1"
             />
             <Button
               type="button"
@@ -341,7 +341,7 @@ export function ProfileEditPage() {
 
       {/* Avatar section */}
       {activeSection === "avatar" && (
-        <div className="forge-card p-6 space-y-5">
+        <div className="guild-card p-6 space-y-5">
           <h2 className="text-base font-semibold text-charcoal-100">Profile Photo</h2>
           <div className="flex items-center gap-6">
             <Avatar src={profile.avatarUrl} name={profile.displayName} size="xl" />
@@ -349,7 +349,7 @@ export function ProfileEditPage() {
               <p className="text-sm text-charcoal-400">
                 JPG, PNG or WebP. Max 5MB. Square images work best.
               </p>
-              <label className="forge-btn-secondary text-sm cursor-pointer inline-flex items-center gap-2">
+              <label className="guild-btn-secondary text-sm cursor-pointer inline-flex items-center gap-2">
                 <Upload className="h-4 w-4" aria-hidden="true" />
                 Upload photo
                 <input

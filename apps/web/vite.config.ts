@@ -14,8 +14,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "FORGE",
-        short_name: "FORGE",
+        name: "The Guild",
+        short_name: "The Guild",
         description: "The professional network for people who make, build and create.",
         theme_color: "#111827",
         background_color: "#111827",
@@ -35,10 +35,10 @@ export default defineConfig({
       // Workspace package aliases — resolve to source directly so Vite
       // can process them without a separate build step.
       // Only the packages the web bundle actually imports.
-      // @forge/auth and @forge/database are server-side only — not aliased here.
-      "@forge/types": path.resolve(root, "packages/types/src/index.ts"),
-      "@forge/validation": path.resolve(root, "packages/validation/src/index.ts"),
-      "@forge/config": path.resolve(root, "packages/config/src/index.ts"),
+      // @guild/auth and @guild/database are server-side only — not aliased here.
+      "@guild/types": path.resolve(root, "packages/types/src/index.ts"),
+      "@guild/validation": path.resolve(root, "packages/validation/src/index.ts"),
+      "@guild/config": path.resolve(root, "packages/config/src/index.ts"),
     },
   },
   server: {

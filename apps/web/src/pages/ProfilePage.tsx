@@ -12,9 +12,9 @@ import { WriteReviewModal } from "@/components/reviews/WriteReviewModal";
 import { ReviewCard } from "@/components/reviews/ReviewCard";
 import { Spinner } from "@/components/ui/Spinner";
 import { Button } from "@/components/ui/Button";
-import type { ProfessionalProfile, Review, PaginatedResponse } from "@forge/types";
-import { LEVEL_NAMES, LEVEL_DISCLAIMER } from "@forge/config";
-import type { ReputationLevel } from "@forge/types";
+import type { ProfessionalProfile, Review, PaginatedResponse } from "@guild/types";
+import { LEVEL_NAMES, LEVEL_DISCLAIMER } from "@guild/config";
+import type { ReputationLevel } from "@guild/types";
 import {
   MapPin, Calendar, ExternalLink, Briefcase, Star, TrendingUp,
   Info, Package, Wrench, MessageSquare, FileText, Image, Flag, PenLine,
@@ -104,7 +104,7 @@ export function ProfilePage() {
       <div className="max-w-xl mx-auto px-4 py-20 text-center space-y-4">
         <h1 className="text-2xl font-bold">Profile not found</h1>
         <p className="text-charcoal-400">This profile doesn't exist or is private.</p>
-        <Link to="/discover" className="forge-btn-primary inline-flex">Browse professionals</Link>
+        <Link to="/discover" className="guild-btn-primary inline-flex">Browse professionals</Link>
       </div>
     );
   }
@@ -153,7 +153,7 @@ export function ProfilePage() {
           <div className="lg:col-span-2 space-y-8">
 
             {/* Header card */}
-            <div className="forge-card p-6">
+            <div className="guild-card p-6">
               <div className="flex flex-col sm:flex-row gap-5 items-start">
                 <Avatar src={profile.avatarUrl} name={profile.displayName} size="xl" />
                 <div className="flex-1 min-w-0">
@@ -254,7 +254,7 @@ export function ProfilePage() {
                     href={profile.websiteUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="forge-btn-ghost text-sm"
+                    className="guild-btn-ghost text-sm"
                   >
                     <ExternalLink className="h-4 w-4" aria-hidden="true" />
                     Website
@@ -262,7 +262,7 @@ export function ProfilePage() {
                 )}
                 <button
                   onClick={() => setShowReport(true)}
-                  className="forge-btn-ghost text-sm text-charcoal-500 hover:text-red-400 ml-auto"
+                  className="guild-btn-ghost text-sm text-charcoal-500 hover:text-red-400 ml-auto"
                 >
                   <Flag className="h-4 w-4" aria-hidden="true" />
                   Report
@@ -272,7 +272,7 @@ export function ProfilePage() {
 
             {/* About */}
             {profile.bio && (
-              <section className="forge-card p-6" aria-labelledby="about-heading">
+              <section className="guild-card p-6" aria-labelledby="about-heading">
                 <h2 id="about-heading" className="text-lg font-semibold text-charcoal-100 mb-3">About</h2>
                 <p className="text-charcoal-300 leading-relaxed whitespace-pre-line">{profile.bio}</p>
               </section>
@@ -280,7 +280,7 @@ export function ProfilePage() {
 
             {/* Services */}
             {services && services.length > 0 && (
-              <section className="forge-card p-6" aria-labelledby="services-heading">
+              <section className="guild-card p-6" aria-labelledby="services-heading">
                 <h2 id="services-heading" className="text-lg font-semibold text-charcoal-100 mb-4 flex items-center gap-2">
                   <Wrench className="h-5 w-5 text-copper-500" aria-hidden="true" />
                   Services
@@ -309,7 +309,7 @@ export function ProfilePage() {
 
             {/* Skills */}
             {profile.skills.length > 0 && (
-              <section className="forge-card p-6" aria-labelledby="skills-heading">
+              <section className="guild-card p-6" aria-labelledby="skills-heading">
                 <h2 id="skills-heading" className="text-lg font-semibold text-charcoal-100 mb-4">Skills</h2>
                 <div className="flex flex-wrap gap-2">
                   {profile.skills.map((s) => (
@@ -336,7 +336,7 @@ export function ProfilePage() {
                   {projectsData.items.map((project) => {
                     const coverMedia = project.media.find((m) => m.phase === "after") ?? project.media[0];
                     return (
-                      <div key={project.id} className="forge-card overflow-hidden group">
+                      <div key={project.id} className="guild-card overflow-hidden group">
                         {/* Image */}
                         <div className="aspect-video bg-charcoal-800 overflow-hidden relative">
                           {coverMedia ? (
@@ -410,7 +410,7 @@ export function ProfilePage() {
                 )}
               </section>
             ) : reviewsData && reviewsData.items.length === 0 ? (
-              <section className="forge-card p-6 text-center" aria-labelledby="reviews-empty">
+              <section className="guild-card p-6 text-center" aria-labelledby="reviews-empty">
                 <Star className="h-8 w-8 text-charcoal-700 mx-auto mb-2" aria-hidden="true" />
                 <h2 id="reviews-empty" className="font-medium text-charcoal-400">No reviews yet</h2>
                 <p className="text-sm text-charcoal-500 mt-1">Be the first to work with {profile.displayName} and leave a review.</p>
@@ -424,7 +424,7 @@ export function ProfilePage() {
             {trustCard && <TrustCard data={trustCard} />}
 
             {/* Quick stats */}
-            <div className="forge-card p-5 space-y-4">
+            <div className="guild-card p-5 space-y-4">
               <h2 className="text-base font-semibold text-charcoal-100 flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-copper-500" aria-hidden="true" />
                 At a glance
@@ -466,7 +466,7 @@ export function ProfilePage() {
             </div>
 
             {/* CTA sidebar */}
-            <div className="forge-card p-5 space-y-3">
+            <div className="guild-card p-5 space-y-3">
               <Button className="w-full" onClick={() => setContactMode("contact")}>
                 <MessageSquare className="h-4 w-4" aria-hidden="true" />
                 Contact {profile.displayName.split(" ")[0]}

@@ -1,4 +1,4 @@
-# FORGE Database Design
+# The Guild Database Design
 
 Cloudflare D1 (SQLite). Migration files in `migrations/`.
 

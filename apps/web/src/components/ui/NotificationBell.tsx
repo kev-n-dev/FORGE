@@ -4,7 +4,7 @@ import { api } from "@/lib/api";
 import { Bell, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Link } from "@tanstack/react-router";
-import type { Notification } from "@forge/types";
+import type { Notification } from "@guild/types";
 
 export function NotificationBell() {
   const [open, setOpen] = useState(false);
@@ -58,7 +58,7 @@ export function NotificationBell() {
           <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} aria-hidden="true" />
 
           {/* Dropdown */}
-          <div className="absolute right-0 top-full mt-2 w-80 forge-card z-40 animate-fade-in overflow-hidden">
+          <div className="absolute right-0 top-full mt-2 w-80 guild-card z-40 animate-fade-in overflow-hidden">
             <div className="flex items-center justify-between px-4 py-3 border-b border-charcoal-800">
               <h3 className="font-semibold text-sm text-charcoal-100">Notifications</h3>
               {unreadCount > 0 && (

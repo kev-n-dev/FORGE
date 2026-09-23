@@ -1,8 +1,8 @@
 {
-  "name": "forge",
+  "name": "the-guild",
   "version": "0.1.0",
   "private": true,
-  "description": "FORGE — The professional network for people who make, build and create.",
+  "description": "The Guild — The professional network for people who make, build and create.",
   "engines": {
     "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
@@ -17,9 +17,9 @@
     "typecheck": "pnpm -r run typecheck",
     "test": "pnpm -r run test",
     "test:e2e": "playwright test",
-    "migrate:local": "pnpm --filter @forge/database run migrate:local",
-    "migrate:remote": "pnpm --filter @forge/database run migrate:remote",
-    "seed:local": "pnpm --filter @forge/database run seed:local",
+    "migrate:local": "pnpm --filter @guild/database run migrate:local",
+    "migrate:remote": "pnpm --filter @guild/database run migrate:remote",
+    "seed:local": "pnpm --filter @guild/database run seed:local",
     "clean": "pnpm -r run clean && rm -rf node_modules",
     "redeploy": "git commit --allow-empty -m \"chore: trigger redeploy\" && git push origin main"
   },

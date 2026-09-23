@@ -20,16 +20,16 @@ import {
   findProfessionalBySlug,
   createReport,
   findProfessionalByUserId,
-} from "@forge/database";
+} from "@guild/database";
 import {
   CreateReviewSchema,
   UpdateReviewSchema,
   CreateReviewResponseSchema,
   CreateReportSchema,
-} from "@forge/validation";
-import { verifyTurnstile, assertOwnerOrAdmin, NotFoundError } from "@forge/auth";
-import { UserRole } from "@forge/types";
-import { recordReputationEvent, recalculateReputationLevel } from "@forge/database";
+} from "@guild/validation";
+import { verifyTurnstile, assertOwnerOrAdmin, NotFoundError } from "@guild/auth";
+import { UserRole } from "@guild/types";
+import { recordReputationEvent, recalculateReputationLevel } from "@guild/database";
 import type { Env, HonoVariables } from "../types";
 import { ok, err, created, paginated, buildPaginationMeta } from "../utils/response";
 import { validate } from "../utils/validate";

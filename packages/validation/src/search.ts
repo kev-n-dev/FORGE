@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ProfessionalAvailability, ReputationLevel } from "@forge/types";
+import { ProfessionalAvailability, ReputationLevel } from "@guild/types";
 import { zPaginationQuery } from "./common";
 
 const professionalSortOptions = [

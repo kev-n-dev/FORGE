@@ -1,9 +1,9 @@
 /**
- * Type-safe API client for the FORGE Worker API.
+ * Type-safe API client for the The Guild Worker API.
  * Handles token refresh, error normalisation, and request/response typing.
  */
 
-import type { ApiResponse, ApiError } from "@forge/types";
+import type { ApiResponse, ApiError } from "@guild/types";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "/api";
 
@@ -109,7 +109,7 @@ export async function apiFetch<T>(
     }
     clearTokens();
     // Emit a custom event so the auth store can react
-    window.dispatchEvent(new CustomEvent("forge:session-expired"));
+    window.dispatchEvent(new CustomEvent("guild:session-expired"));
   }
 
   return handleResponse<T>(res);

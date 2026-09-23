@@ -38,22 +38,22 @@
 }
 
 @layer components {
-  .forge-card {
+  .guild-card {
     @apply bg-charcoal-900 border border-charcoal-800 rounded-xl shadow-card;
   }
 
-  .forge-input {
+  .guild-input {
     @apply w-full bg-charcoal-800 border border-charcoal-700 rounded-lg px-4 py-3
            text-charcoal-50 placeholder-charcoal-400
            focus:outline-none focus:ring-2 focus:ring-copper-500 focus:border-transparent
            transition-colors duration-150;
   }
 
-  .forge-label {
+  .guild-label {
     @apply block text-sm font-medium text-charcoal-300 mb-1.5;
   }
 
-  .forge-btn-primary {
+  .guild-btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold
            bg-copper-600 text-white
            hover:bg-copper-500 active:bg-copper-700
@@ -62,7 +62,7 @@
            transition-colors duration-150;
   }
 
-  .forge-btn-secondary {
+  .guild-btn-secondary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold
            bg-charcoal-800 text-charcoal-100 border border-charcoal-700
            hover:bg-charcoal-700 active:bg-charcoal-600
@@ -71,7 +71,7 @@
            transition-colors duration-150;
   }
 
-  .forge-btn-ghost {
+  .guild-btn-ghost {
     @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg font-medium
            text-charcoal-300
            hover:bg-charcoal-800 hover:text-charcoal-50
@@ -79,19 +79,19 @@
            transition-colors duration-150;
   }
 
-  .forge-badge {
+  .guild-badge {
     @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium;
   }
 
-  .forge-badge-verified {
-    @apply forge-badge bg-green-900/50 text-green-400 border border-green-800;
+  .guild-badge-verified {
+    @apply guild-badge bg-green-900/50 text-green-400 border border-green-800;
   }
 
-  .forge-badge-level {
-    @apply forge-badge bg-copper-900/50 text-copper-300 border border-copper-800;
+  .guild-badge-level {
+    @apply guild-badge bg-copper-900/50 text-copper-300 border border-copper-800;
   }
 
-  .forge-badge-sponsored {
-    @apply forge-badge bg-charcoal-800 text-charcoal-400 border border-charcoal-700;
+  .guild-badge-sponsored {
+    @apply guild-badge bg-charcoal-800 text-charcoal-400 border border-charcoal-700;
   }
 }

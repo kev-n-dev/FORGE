@@ -3,10 +3,10 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { FullPageSpinner } from "@/components/ui/Spinner";
 import { Avatar } from "@/components/ui/Avatar";
-import { Hammer, Search, Briefcase, MessageSquare, User, Menu, X, Shield } from "lucide-react";
+import { Shield, Search, Briefcase, MessageSquare, User, Menu, X } from "lucide-react";
 import { NotificationBell } from "@/components/ui/NotificationBell";
 import { cn } from "@/lib/cn";
-import { UserRole } from "@forge/types";
+import { UserRole } from "@guild/types";
 
 export function RootLayout({ children }: { children: React.ReactNode }) {
   const { isLoading, isAuthenticated, user, logout } = useAuth();
@@ -45,10 +45,10 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
             <Link
               to="/"
               className="flex items-center gap-2 font-bold text-xl tracking-tight text-charcoal-50 hover:text-copper-400 transition-colors"
-              aria-label="FORGE home"
+              aria-label="The Guild home"
             >
-              <Hammer className="h-6 w-6 text-copper-500" aria-hidden="true" />
-              FORGE
+              <Shield className="h-6 w-6 text-copper-500" aria-hidden="true" />
+              The Guild
             </Link>
 
             {/* Desktop nav */}
@@ -111,9 +111,9 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
                   </Link>
                   <Link
                     to="/register"
-                    className="forge-btn-primary text-sm px-4 py-2"
+                    className="guild-btn-primary text-sm px-4 py-2"
                   >
-                    Join FORGE
+                    Join The Guild
                   </Link>
                 </>
               )}
@@ -152,17 +152,17 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
                 <div className="pt-4 border-t border-charcoal-800 space-y-2">
                   <Link
                     to="/login"
-                    className="block w-full forge-btn-secondary text-center"
+                    className="block w-full guild-btn-secondary text-center"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     Sign in
                   </Link>
                   <Link
                     to="/register"
-                    className="block w-full forge-btn-primary text-center"
+                    className="block w-full guild-btn-primary text-center"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Join FORGE
+                    Join The Guild
                   </Link>
                 </div>
               )}
@@ -181,12 +181,12 @@ export function RootLayout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2 font-bold text-charcoal-400">
-              <Hammer className="h-5 w-5 text-copper-600" aria-hidden="true" />
-              FORGE
+              <Shield className="h-5 w-5 text-copper-600" aria-hidden="true" />
+              The Guild
             </div>
             <p className="text-sm text-charcoal-500 text-center">
-              Platform levels and verification badges describe activity on FORGE and are not official
-              trade qualifications. FORGE does not guarantee the quality or conduct of any
+              Platform levels and verification badges describe activity on The Guild and are not official
+              trade qualifications. The Guild does not guarantee the quality or conduct of any
               professional.
             </p>
             <nav className="flex gap-4 text-sm text-charcoal-500" aria-label="Footer navigation">

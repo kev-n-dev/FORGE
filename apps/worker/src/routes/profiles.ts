@@ -35,16 +35,16 @@ import {
   dbRun,
   newId,
   now,
-} from "@forge/database";
+} from "@guild/database";
 import {
   UpdateProfessionalProfileSchema,
   AddSkillSchema,
   AddServiceSchema,
-} from "@forge/validation";
-import { isAllowedMimeType, isAllowedSize, R2_KEY_PREFIXES, LEVEL_NAMES, LEVEL_DESCRIPTIONS } from "@forge/config";
-import { NotFoundError } from "@forge/auth";
-import { ReputationLevel } from "@forge/types";
-import type { ProfessionalProfileRow } from "@forge/database";
+} from "@guild/validation";
+import { isAllowedMimeType, isAllowedSize, R2_KEY_PREFIXES, LEVEL_NAMES, LEVEL_DESCRIPTIONS } from "@guild/config";
+import { NotFoundError } from "@guild/auth";
+import { ReputationLevel } from "@guild/types";
+import type { ProfessionalProfileRow } from "@guild/database";
 import type { Env, HonoVariables } from "../types";
 import { ok, err, created } from "../utils/response";
 import { validate } from "../utils/validate";
@@ -285,7 +285,7 @@ profiles.get("/:slug/trust-card", async (c) => {
     yearsActive,
     portfolioProjectCount: portfolioCount?.cnt ?? 0,
     disclaimer:
-      "This information reflects activity on FORGE. FORGE does not guarantee the quality of any professional's work.",
+      "This information reflects activity on The Guild. The Guild does not guarantee the quality of any professional's work.",
   });
 });
 

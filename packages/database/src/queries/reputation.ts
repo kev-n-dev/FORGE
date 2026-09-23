@@ -1,5 +1,5 @@
 import { dbAll, dbFirst, dbRun, newId, now, type DB } from "../utils";
-import { ReputationLevel } from "@forge/types";
+import { ReputationLevel } from "@guild/types";
 
 export interface ReputationEventRow {
   id: string;

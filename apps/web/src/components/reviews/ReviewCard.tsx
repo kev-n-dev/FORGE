@@ -2,7 +2,7 @@ import { StarRating } from "@/components/ui/StarRating";
 import { Avatar } from "@/components/ui/Avatar";
 import { ThumbsUp, MessageSquare, Flag } from "lucide-react";
 import { cn } from "@/lib/cn";
-import type { Review } from "@forge/types";
+import type { Review } from "@guild/types";
 
 interface ReviewCardProps {
   review: Review;
@@ -16,7 +16,7 @@ export function ReviewCard({ review: r, canRespond, onRespond, onReport }: Revie
 
   return (
     <article
-      className="forge-card p-5 space-y-4"
+      className="guild-card p-5 space-y-4"
       aria-labelledby={`review-${r.id}-heading`}
     >
       {/* Header */}

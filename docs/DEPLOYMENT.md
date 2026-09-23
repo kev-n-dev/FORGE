@@ -1,4 +1,4 @@
-# FORGE Deployment Guide
+# The Guild Deployment Guide
 
 ## Prerequisites
 
@@ -15,8 +15,8 @@
 
 ```bash
 # Create D1 databases
-wrangler d1 create forge-db
-wrangler d1 create forge-db-staging
+wrangler d1 create the-guild-db
+wrangler d1 create the-guild-db-staging
 
 # Create KV namespaces
 wrangler kv:namespace create SESSION_KV
@@ -25,9 +25,9 @@ wrangler kv:namespace create CACHE_KV
 wrangler kv:namespace create CACHE_KV --preview
 
 # Create R2 buckets
-wrangler r2 bucket create forge-media
+wrangler r2 bucket create the-guild-media
 wrangler r2 bucket create forge-private
-wrangler r2 bucket create forge-media-staging
+wrangler r2 bucket create the-guild-media-staging
 wrangler r2 bucket create forge-private-staging
 
 # Create Queues
@@ -47,10 +47,10 @@ Replace all `REPLACE_WITH_*` placeholders with the IDs returned above.
 pnpm migrate:local
 
 # Remote (staging)
-wrangler d1 migrations apply forge-db-staging --env staging --remote
+wrangler d1 migrations apply the-guild-db-staging --env staging --remote
 
 # Remote (production)
-wrangler d1 migrations apply forge-db --env production --remote
+wrangler d1 migrations apply the-guild-db --env production --remote
 ```
 
 ### 4. Set Secrets
@@ -75,7 +75,7 @@ wrangler secret put TURNSTILE_SECRET --env production
 pnpm --filter @forge/web run build
 
 # Deploy to Pages (creates the project on first run)
-wrangler pages deploy apps/web/dist --project-name=forge-web
+wrangler pages deploy apps/web/dist --project-name=the-guild-web
 ```
 
 ### 6. Configure Turnstile
@@ -134,9 +134,9 @@ wrangler rollback <deployment-id>
 
 ## Custom Domain
 
-1. Cloudflare Dashboard → Workers & Pages → forge-worker → Settings → Triggers
-2. Add custom domain: `forge.example.com`
-3. For Pages: Dashboard → Pages → forge-web → Custom Domains
+1. Cloudflare Dashboard → Workers & Pages → the-guild → Settings → Triggers
+2. Add custom domain: `theguild.example.com`
+3. For Pages: Dashboard → Pages → the-guild-web → Custom Domains
 
 ---
 
@@ -144,7 +144,7 @@ wrangler rollback <deployment-id>
 
 Configure public access for the media bucket:
 
-1. Dashboard → R2 → forge-media → Settings → Public Access
+1. Dashboard → R2 → the-guild-media → Settings → Public Access
 2. Enable public URL
 3. Set `MEDIA_BASE_URL` in `wrangler.toml` to match
 
@@ -155,7 +155,7 @@ Verification documents in `forge-private` must **never** have public access enab
 ## Monitoring
 
 Cloudflare provides:
-- Worker analytics: requests, errors, latency (Dashboard → Workers → forge-worker → Metrics)
+- Worker analytics: requests, errors, latency (Dashboard → Workers → the-guild → Metrics)
 - D1 analytics: queries, reads, writes
 - Logpush to R2 for persistent log storage (configure when needed)
 

@@ -12,10 +12,10 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Spinner } from "@/components/ui/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import type { Category } from "@forge/types";
-import { ProfessionalAvailability } from "@forge/types";
+import type { Category } from "@guild/types";
+import { ProfessionalAvailability } from "@guild/types";
 import { z } from "zod";
-import { Hammer, ChevronRight, ChevronLeft, CheckCircle2 } from "lucide-react";
+import { Shield, AlertCircle, CheckCircle2, XCircle, Loader2, ArrowLeft, ArrowRight, ChevronRight, ChevronLeft, Home, Search } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 // ---------------------------------------------------------------------------
@@ -117,8 +117,8 @@ export function ProfileSetupPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
-            <span className="text-2xl font-bold">FORGE</span>
+            <Shield className="h-8 w-8 text-copper-500" aria-hidden="true" />
+            <span className="text-2xl font-bold">The Guild</span>
           </div>
           <h1 className="text-xl font-semibold text-charcoal-100">Set up your profile</h1>
           <p className="text-charcoal-400 text-sm mt-1">
@@ -142,7 +142,7 @@ export function ProfileSetupPage() {
 
         {/* Step 0 — Basic info */}
         {step === 0 && (
-          <div className="forge-card p-6 space-y-5">
+          <div className="guild-card p-6 space-y-5">
             <Input {...register("displayName")} label="Your name" required placeholder="e.g. Marcus Williams" error={errors.displayName?.message} />
             <Input {...register("businessName")} label="Business name (optional)" placeholder="e.g. Marcus Woodworks" error={errors.businessName?.message} />
             <Input {...register("tagline")} label="Tagline (optional)" placeholder="e.g. Carpenter · Furniture Maker" error={errors.tagline?.message} />
@@ -163,9 +163,9 @@ export function ProfileSetupPage() {
 
         {/* Step 1 — Categories */}
         {step === 1 && (
-          <div className="forge-card p-6 space-y-5">
+          <div className="guild-card p-6 space-y-5">
             <div>
-              <p className="forge-label">What do you do? <span className="text-charcoal-500">(select up to 5)</span></p>
+              <p className="guild-label">What do you do? <span className="text-charcoal-500">(select up to 5)</span></p>
               {categories ? (
                 <div className="flex flex-wrap gap-2 mt-3">
                   {categories.map((cat) => (
@@ -201,16 +201,16 @@ export function ProfileSetupPage() {
 
         {/* Step 2 — Skills */}
         {step === 2 && (
-          <div className="forge-card p-6 space-y-5">
+          <div className="guild-card p-6 space-y-5">
             <div>
-              <label className="forge-label">Your skills</label>
+              <label className="guild-label">Your skills</label>
               <div className="flex gap-2 mt-1.5">
                 <input
                   value={skillInput}
                   onChange={(e) => setSkillInput(e.target.value)}
                   onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addSkill(); }}}
                   placeholder="e.g. Carpentry, Cabinetry…"
-                  className="forge-input flex-1"
+                  className="guild-input flex-1"
                 />
                 <Button type="button" variant="secondary" onClick={addSkill}>Add</Button>
               </div>
@@ -251,7 +251,7 @@ export function ProfileSetupPage() {
 
         {/* Step 3 — Done (redirect happens automatically) */}
         {step === 3 && (
-          <div className="forge-card p-8 text-center space-y-4">
+          <div className="guild-card p-8 text-center space-y-4">
             <CheckCircle2 className="h-14 w-14 text-green-400 mx-auto" />
             <h2 className="text-xl font-semibold text-charcoal-100">Profile created!</h2>
             <p className="text-charcoal-400">Taking you to your dashboard…</p>

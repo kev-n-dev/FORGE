@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
-import { RegisterSchema, type RegisterInput } from "@forge/validation";
+import { RegisterSchema, type RegisterInput } from "@guild/validation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { Hammer, AlertCircle, User, Wrench, CheckCircle2, Mail } from "lucide-react";
-import { UserRole } from "@forge/types";
+import { Shield, AlertCircle, User, Wrench, CheckCircle2, Mail } from "lucide-react";
+import { UserRole } from "@guild/types";
 import { cn } from "@/lib/cn";
 import { useState } from "react";
 import { api } from "@/lib/api";
@@ -52,11 +52,11 @@ export function RegisterPage() {
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-md text-center space-y-6">
           <div className="flex items-center justify-center gap-2">
-            <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
-            <span className="text-2xl font-bold">FORGE</span>
+            <Shield className="h-8 w-8 text-copper-500" aria-hidden="true" />
+            <span className="text-2xl font-bold">The Guild</span>
           </div>
 
-          <div className="forge-card p-8 space-y-5">
+          <div className="guild-card p-8 space-y-5">
             <div className="h-16 w-16 rounded-full bg-green-900/30 border border-green-700 flex items-center justify-center mx-auto">
               <Mail className="h-8 w-8 text-green-400" aria-hidden="true" />
             </div>
@@ -87,7 +87,7 @@ export function RegisterPage() {
               ))}
             </div>
 
-            <Link to="/login" className="forge-btn-primary w-full inline-flex justify-center">
+            <Link to="/login" className="guild-btn-primary w-full inline-flex justify-center">
               Go to sign in
             </Link>
           </div>
@@ -114,14 +114,14 @@ export function RegisterPage() {
       <div className="w-full max-w-lg">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
-            <span className="text-2xl font-bold">FORGE</span>
+            <Shield className="h-8 w-8 text-copper-500" aria-hidden="true" />
+            <span className="text-2xl font-bold">The Guild</span>
           </div>
           <h1 className="text-xl font-semibold text-charcoal-100">Create your account</h1>
           <p className="text-charcoal-400 text-sm mt-1">Join thousands of skilled professionals</p>
         </div>
 
-        <div className="forge-card p-6">
+        <div className="guild-card p-6">
           {serverError && (
             <div
               className="flex items-center gap-3 bg-red-900/30 border border-red-800 rounded-lg p-4 mb-6 text-sm text-red-300"
@@ -138,7 +138,7 @@ export function RegisterPage() {
             noValidate
           >
             <fieldset>
-              <legend className="forge-label">I want to…</legend>
+              <legend className="guild-label">I want to…</legend>
               <div className="grid grid-cols-2 gap-3 mt-1.5">
                 {[
                   { value: UserRole.Customer, label: "Hire professionals", icon: User },

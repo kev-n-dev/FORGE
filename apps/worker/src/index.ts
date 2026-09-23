@@ -1,5 +1,5 @@
 /**
- * FORGE API Worker — Cloudflare Workers entry point.
+ * The Guild API Worker — Cloudflare Workers entry point.
  * Built with Hono for lightweight, edge-native routing.
  *
  * Architecture:
@@ -71,7 +71,7 @@ app.use("*", logger());
 // Health check
 // ---------------------------------------------------------------------------
 app.get("/health", (c) =>
-  c.json({ status: "ok", service: "forge-api", timestamp: new Date().toISOString() })
+  c.json({ status: "ok", service: "guild-api", timestamp: new Date().toISOString() })
 );
 
 // ---------------------------------------------------------------------------

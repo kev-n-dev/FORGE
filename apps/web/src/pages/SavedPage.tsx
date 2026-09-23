@@ -27,7 +27,7 @@ export function SavedPage() {
           This feature is coming soon.
         </p>
       </div>
-      <Link to="/discover" className="forge-btn-primary inline-flex">
+      <Link to="/discover" className="guild-btn-primary inline-flex">
         <Search className="h-4 w-4" aria-hidden="true" />
         Find professionals
         <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -27,14 +27,14 @@ import {
   dbFirst,
   dbRun,
   now,
-} from "@forge/database";
+} from "@guild/database";
 import {
   AdminUpdateUserStatusSchema,
   AdminRemoveReviewSchema,
   AdminUpdateReportStatusSchema,
   AdminReviewVerificationSchema,
-} from "@forge/validation";
-import { NotFoundError } from "@forge/auth";
+} from "@guild/validation";
+import { NotFoundError } from "@guild/auth";
 import type { Env, HonoVariables } from "../types";
 import { ok, err, paginated, buildPaginationMeta } from "../utils/response";
 import { validate } from "../utils/validate";

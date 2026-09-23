@@ -1,16 +1,16 @@
-# FORGE
+# The Guild
 
 **The professional network for people who make, build and create.**
 
 > Build your reputation. Build relationships. Build a business.
 
-FORGE is a professional network, portfolio platform, reputation system, and job marketplace for skilled tradespeople, craftspeople, and makers.
+The Guild is a professional network, portfolio platform, reputation system, and job marketplace for skilled tradespeople, craftspeople, and makers.
 
 ---
 
-## What is FORGE?
+## What is The Guild?
 
-FORGE helps professionals who make, build, repair, create, and sell to:
+The Guild helps professionals who make, build, repair, create, and sell to:
 
 - Build a public professional identity
 - Showcase their work through a verified portfolio
@@ -18,13 +18,13 @@ FORGE helps professionals who make, build, repair, create, and sell to:
 - Build genuine reputation through verified jobs and honest reviews
 - Network with other professionals
 
-FORGE helps customers to:
+The Guild helps customers to:
 
 - Discover skilled professionals through transparent evidence
 - View verified work history, genuine reviews, and credentials
 - Contact, hire, and review professionals
 
-**Core principle:** FORGE never secretly decides who is "best." It exposes evidence — verified jobs, ratings, reviews, credentials — and lets customers decide.
+**Core principle:** The Guild never secretly decides who is "best." It exposes evidence — verified jobs, ratings, reviews, credentials — and lets customers decide.
 
 ---
 
@@ -177,7 +177,7 @@ These are **non-negotiable** and enforced throughout the codebase:
 1. Professionals cannot delete customer reviews
 2. Advertising cannot buy reputation, ratings, or verification
 3. Platform level is not an official trade qualification
-4. FORGE never guarantees the quality of any professional's work
+4. The Guild never guarantees the quality of any professional's work
 5. Verification describes what was verified, not quality
 6. Admin review removals require an audit log entry with reason
 7. Sensitive personal information (addresses, documents) is never publicly exposed
@@ -191,10 +191,10 @@ See [CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
 ## Security
 
-See [SECURITY.md](docs/SECURITY.md). To report a vulnerability, email security@forge.example.com.
+See [SECURITY.md](docs/SECURITY.md). To report a vulnerability, email security@theguild.example.com.
 
 ## License
 
 MIT — see LICENSE.
-# FORGE
-# FORGE
+# The Guild
+# The Guild

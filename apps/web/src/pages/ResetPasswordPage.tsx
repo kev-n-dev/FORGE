@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PasswordResetConfirmSchema, type PasswordResetConfirmInput } from "@forge/validation";
+import { PasswordResetConfirmSchema, type PasswordResetConfirmInput } from "@guild/validation";
 import { api, ApiClientError } from "@/lib/api";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { Hammer, AlertCircle, CheckCircle2, XCircle } from "lucide-react";
+import { Shield, AlertCircle, CheckCircle2, XCircle, Loader2, ArrowLeft, ArrowRight, ChevronRight, ChevronLeft, Home, Search } from "lucide-react";
 
 export function ResetPasswordPage() {
   const search = useSearch({ strict: false }) as { token?: string };
@@ -30,7 +30,7 @@ export function ResetPasswordPage() {
           <XCircle className="h-14 w-14 text-charcoal-600 mx-auto" />
           <h1 className="text-xl font-semibold text-charcoal-100">Invalid reset link</h1>
           <p className="text-charcoal-400">This link is missing a token. Please request a new one.</p>
-          <Link to="/forgot-password" className="forge-btn-primary inline-flex">
+          <Link to="/forgot-password" className="guild-btn-primary inline-flex">
             Request new link
           </Link>
         </div>
@@ -45,7 +45,7 @@ export function ResetPasswordPage() {
           <CheckCircle2 className="h-14 w-14 text-green-400 mx-auto" />
           <h1 className="text-xl font-semibold text-charcoal-100">Password updated</h1>
           <p className="text-charcoal-400">You can now sign in with your new password.</p>
-          <Link to="/login" className="forge-btn-primary inline-flex">
+          <Link to="/login" className="guild-btn-primary inline-flex">
             Sign in
           </Link>
         </div>
@@ -69,13 +69,13 @@ export function ResetPasswordPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
-            <span className="text-2xl font-bold">FORGE</span>
+            <Shield className="h-8 w-8 text-copper-500" aria-hidden="true" />
+            <span className="text-2xl font-bold">The Guild</span>
           </div>
           <h1 className="text-xl font-semibold text-charcoal-100">Choose a new password</h1>
         </div>
 
-        <div className="forge-card p-6">
+        <div className="guild-card p-6">
           {serverError && (
             <div className="flex items-center gap-3 bg-red-900/30 border border-red-800 rounded-lg p-4 mb-6 text-sm text-red-300" role="alert">
               <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />

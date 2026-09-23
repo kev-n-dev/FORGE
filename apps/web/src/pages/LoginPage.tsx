@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { LoginSchema, type LoginInput } from "@forge/validation";
+import { LoginSchema, type LoginInput } from "@guild/validation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
-import { Hammer, AlertCircle } from "lucide-react";
+import { Shield, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { ApiClientError } from "@/lib/api";
-import { UserRole } from "@forge/types";
+import { UserRole } from "@guild/types";
 
 export function LoginPage() {
   const { login } = useAuth();
@@ -63,14 +63,14 @@ export function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
-            <span className="text-2xl font-bold">FORGE</span>
+            <Shield className="h-8 w-8 text-copper-500" aria-hidden="true" />
+            <span className="text-2xl font-bold">The Guild</span>
           </div>
           <h1 className="text-xl font-semibold text-charcoal-100">Welcome back</h1>
           <p className="text-charcoal-400 text-sm mt-1">Sign in to your account</p>
         </div>
 
-        <div className="forge-card p-6">
+        <div className="guild-card p-6">
           {serverError && (
             <div className="flex items-center gap-3 bg-red-900/30 border border-red-800 rounded-lg p-4 mb-6 text-sm text-red-300" role="alert">
               <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -98,7 +98,7 @@ export function LoginPage() {
         <p className="text-center text-sm text-charcoal-400 mt-6">
           Don&apos;t have an account?{" "}
           <Link to="/register" className="text-copper-400 hover:text-copper-300 font-medium transition-colors">
-            Join FORGE
+            Join The Guild
           </Link>
         </p>
       </div>

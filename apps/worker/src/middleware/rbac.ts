@@ -1,6 +1,6 @@
 import type { MiddlewareHandler } from "hono";
-import { isAdmin, isSuperAdmin } from "@forge/auth";
-import type { UserRole } from "@forge/types";
+import { isAdmin, isSuperAdmin } from "@guild/auth";
+import type { UserRole } from "@guild/types";
 import type { Env, HonoVariables } from "../types";
 import { err } from "../utils/response";
 

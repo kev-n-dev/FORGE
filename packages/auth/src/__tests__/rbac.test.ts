@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { can, isAdmin, isProfessional, assertOwnerOrAdmin, AuthorizationError } from "../rbac";
-import { UserRole } from "@forge/types";
+import { UserRole } from "@guild/types";
 
 describe("can()", () => {
   it("customer can create reviews", () => {

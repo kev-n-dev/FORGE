@@ -1,7 +1,7 @@
 import { useSyncExternalStore, useEffect, useCallback } from "react";
 import { authStore } from "@/store/auth";
 import { api, clearTokens, restoreRefreshToken } from "@/lib/api";
-import type { UserRole } from "@forge/types";
+import type { UserRole } from "@guild/types";
 
 interface LoginResponse {
   accessToken: string;

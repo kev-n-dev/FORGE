@@ -71,7 +71,7 @@ jobs:
 
       - name: Run D1 migrations
         run: |
-          pnpm wrangler d1 migrations apply forge-db \
+          pnpm wrangler d1 migrations apply the-guild-db \
             --env ${{ needs.setup.outputs.environment }} \
             --remote
         env:
@@ -106,7 +106,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - name: Build web app
-        run: pnpm --filter @forge/web run build
+        run: pnpm --filter @guild/web run build
         env:
           VITE_API_BASE_URL: /api
           VITE_ENVIRONMENT: ${{ needs.setup.outputs.environment }}
@@ -117,4 +117,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy apps/web/dist --project-name=forge-web --branch=${{ github.ref_name }}
+          command: pages deploy apps/web/dist --project-name=the-guild-web --branch=${{ github.ref_name }}

@@ -5,7 +5,7 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@forge/types": ["../types/src/index.ts"]
+      "@guild/types": ["../types/src/index.ts"]
     }
   },
   "include": ["src"]

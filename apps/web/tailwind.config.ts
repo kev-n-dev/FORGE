@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // FORGE brand palette — Industrial Professional
+        // The Guild brand palette — Industrial Professional
         forge: {
           50: "#f9f7f4",
           100: "#f0ebe3",

@@ -1,5 +1,5 @@
 {
-  "name": "@forge/worker",
+  "name": "@guild/worker",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -14,11 +14,11 @@
     "clean": "rm -rf dist .wrangler *.tsbuildinfo"
   },
   "dependencies": {
-    "@forge/auth": "workspace:*",
-    "@forge/config": "workspace:*",
-    "@forge/database": "workspace:*",
-    "@forge/types": "workspace:*",
-    "@forge/validation": "workspace:*",
+    "@guild/auth": "workspace:*",
+    "@guild/config": "workspace:*",
+    "@guild/database": "workspace:*",
+    "@guild/types": "workspace:*",
+    "@guild/validation": "workspace:*",
     "hono": "^4.6.3",
     "zod": "^3.23.8"
   },

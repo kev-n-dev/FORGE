@@ -1,8 +1,8 @@
-# FORGE Architecture
+# The Guild Architecture
 
 ## Overview
 
-FORGE runs entirely on Cloudflare infrastructure — no always-on servers, no traditional databases, no expensive managed services. This keeps operating cost near zero until traffic justifies paid tiers.
+The Guild runs entirely on Cloudflare infrastructure — no always-on servers, no traditional databases, no expensive managed services. This keeps operating cost near zero until traffic justifies paid tiers.
 
 ```
 Browser / Mobile App

@@ -20,11 +20,11 @@ import {
   verifyProject,
   findProfessionalBySlug,
   findProfessionalByUserId,
-} from "@forge/database";
-import { CreateProjectSchema } from "@forge/validation";
-import { assertOwnerOrAdmin, NotFoundError } from "@forge/auth";
-import { UserRole } from "@forge/types";
-import { isAllowedMimeType, isAllowedSize, R2_KEY_PREFIXES } from "@forge/config";
+} from "@guild/database";
+import { CreateProjectSchema } from "@guild/validation";
+import { assertOwnerOrAdmin, NotFoundError } from "@guild/auth";
+import { UserRole } from "@guild/types";
+import { isAllowedMimeType, isAllowedSize, R2_KEY_PREFIXES } from "@guild/config";
 import type { Env, HonoVariables } from "../types";
 import { ok, err, created, buildPaginationMeta, paginated } from "../utils/response";
 import { validate } from "../utils/validate";
@@ -55,7 +55,7 @@ projects.get("/by-profile/:slug", async (c) => {
 
   const items = await getProjectsByProfessional(c.env.DB, profile.id, page, pageSize);
   // Get total count
-  const { dbFirst } = await import("@forge/database");
+  const { dbFirst } = await import("@guild/database");
   const countRow = await dbFirst<{ cnt: number }>(
     c.env.DB,
     "SELECT COUNT(*) as cnt FROM projects WHERE professional_id = ? AND status = 'published'",

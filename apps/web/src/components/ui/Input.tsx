@@ -13,7 +13,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="space-y-1.5">
         {label && (
-          <label htmlFor={inputId} className="forge-label">
+          <label htmlFor={inputId} className="guild-label">
             {label}
             {props.required && (
               <span className="text-red-400 ml-1" aria-hidden="true">*</span>
@@ -24,7 +24,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            "forge-input",
+            "guild-input",
             error && "border-red-500 focus:ring-red-500",
             className
           )}

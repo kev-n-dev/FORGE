@@ -1,4 +1,4 @@
-import type { FeatureFlags } from "@forge/types";
+import type { FeatureFlags } from "@guild/types";
 
 /**
  * Default feature flag state (Phase 1 — Foundation only).

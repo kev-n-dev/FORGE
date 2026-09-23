@@ -3,9 +3,9 @@
  * POST /api/reports — submit a report
  */
 import { Hono } from "hono";
-import { createReport } from "@forge/database";
-import { CreateReportSchema } from "@forge/validation";
-import { verifyTurnstile } from "@forge/auth";
+import { createReport } from "@guild/database";
+import { CreateReportSchema } from "@guild/validation";
+import { verifyTurnstile } from "@guild/auth";
 import type { Env, HonoVariables } from "../types";
 import { ok, err } from "../utils/response";
 import { validate } from "../utils/validate";

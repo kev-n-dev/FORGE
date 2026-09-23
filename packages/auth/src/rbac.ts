@@ -4,7 +4,7 @@
  * Never trust client-supplied role claims beyond what the verified JWT contains.
  */
 
-import { UserRole } from "@forge/types";
+import { UserRole } from "@guild/types";
 
 // ---------------------------------------------------------------------------
 // Permission definitions

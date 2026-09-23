@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { LoginSchema, RegisterSchema, PasswordResetRequestSchema } from "../auth";
-import { UserRole } from "@forge/types";
+import { UserRole } from "@guild/types";
 
 describe("LoginSchema", () => {
   it("accepts valid credentials", () => {

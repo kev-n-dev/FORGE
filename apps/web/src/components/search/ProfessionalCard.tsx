@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import type { ProfessionalSearchCard } from "@forge/types";
+import type { ProfessionalSearchCard } from "@guild/types";
 import { Avatar } from "@/components/ui/Avatar";
 import { Badge } from "@/components/ui/Badge";
 import { StarRating } from "@/components/ui/StarRating";
 import { MapPin, Briefcase, TrendingUp } from "lucide-react";
-import { LEVEL_NAMES } from "@forge/config";
-import type { ReputationLevel } from "@forge/types";
+import { LEVEL_NAMES } from "@guild/config";
+import type { ReputationLevel } from "@guild/types";
 import { cn } from "@/lib/cn";
 
 interface ProfessionalCardProps {
@@ -17,7 +17,7 @@ export function ProfessionalCard({ professional: p, className }: ProfessionalCar
   return (
     <article
       className={cn(
-        "forge-card p-5 flex flex-col gap-4 hover:shadow-card-hover hover:border-charcoal-700 transition-all duration-150",
+        "guild-card p-5 flex flex-col gap-4 hover:shadow-card-hover hover:border-charcoal-700 transition-all duration-150",
         className
       )}
     >
@@ -57,7 +57,7 @@ export function ProfessionalCard({ professional: p, className }: ProfessionalCar
         </div>
       </div>
 
-      {/* Reputation evidence — the core of FORGE's transparency */}
+      {/* Reputation evidence — the core of The Guild's transparency */}
       <div className="grid grid-cols-2 gap-3 text-sm">
         {/* Rating */}
         {p.averageRating !== null ? (
@@ -131,7 +131,7 @@ export function ProfessionalCard({ professional: p, className }: ProfessionalCar
       <Link
         to="/people/$slug"
         params={{ slug: p.profileSlug }}
-        className="forge-btn-secondary text-sm text-center w-full"
+        className="guild-btn-secondary text-sm text-center w-full"
       >
         View Profile
       </Link>

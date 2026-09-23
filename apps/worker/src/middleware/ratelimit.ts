@@ -1,6 +1,6 @@
 import type { MiddlewareHandler } from "hono";
 import { checkRateLimit, rateLimitKey } from "../utils/ratelimit";
-import { RATE_LIMITS } from "@forge/config";
+import { RATE_LIMITS } from "@guild/config";
 import type { Env, HonoVariables } from "../types";
 import { err } from "../utils/response";
 

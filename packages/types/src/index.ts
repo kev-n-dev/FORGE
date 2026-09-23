@@ -1,4 +1,4 @@
-// Core domain types for FORGE
+// Core domain types for The Guild
 // These are shared between the API worker and the web frontend.
 
 export * from "./user";

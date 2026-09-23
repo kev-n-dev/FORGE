@@ -76,7 +76,7 @@ export function WriteReviewModal({
       {!isAuthenticated ? (
         <div className="space-y-4">
           <p className="text-sm text-charcoal-400">You need to be signed in to leave a review.</p>
-          <Link to="/login" className="forge-btn-primary inline-flex" onClick={handleClose}>Sign in</Link>
+          <Link to="/login" className="guild-btn-primary inline-flex" onClick={handleClose}>Sign in</Link>
         </div>
       ) : submitted ? (
         <div className="text-center space-y-3 py-4">
@@ -98,7 +98,7 @@ export function WriteReviewModal({
 
           {/* Star rating */}
           <div>
-            <p className="forge-label">Rating <span className="text-red-400">*</span></p>
+            <p className="guild-label">Rating <span className="text-red-400">*</span></p>
             <div className="flex items-center gap-1 mt-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
@@ -126,7 +126,7 @@ export function WriteReviewModal({
 
           {/* Review body */}
           <div>
-            <label htmlFor="review-body" className="forge-label">
+            <label htmlFor="review-body" className="guild-label">
               Your review <span className="text-red-400">*</span>
               <span className="text-charcoal-500 font-normal ml-1">(min 10 characters)</span>
             </label>
@@ -136,7 +136,7 @@ export function WriteReviewModal({
               onChange={(e) => setBody(e.target.value)}
               rows={4}
               placeholder={`Describe your experience with ${professionalName}…`}
-              className="forge-input resize-none mt-1.5"
+              className="guild-input resize-none mt-1.5"
               maxLength={2000}
             />
             <p className="text-xs text-charcoal-500 mt-1">{body.length}/2000</p>
@@ -144,7 +144,7 @@ export function WriteReviewModal({
 
           {/* Would hire again */}
           <div>
-            <p className="forge-label">Would you hire again?</p>
+            <p className="guild-label">Would you hire again?</p>
             <div className="flex gap-3 mt-2">
               {[
                 { value: true, label: "Yes", color: "text-green-400 border-green-700 bg-green-900/20" },

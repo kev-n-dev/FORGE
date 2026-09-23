@@ -25,14 +25,14 @@ export function JobsPage() {
         <h1 className="text-3xl font-bold text-charcoal-50">Job Board</h1>
         <p className="text-charcoal-400 max-w-xl mx-auto leading-relaxed">
           Post a job, get quotes from skilled professionals, and hire with confidence.
-          The FORGE job board is launching soon.
+          The The Guild job board is launching soon.
         </p>
         {!isAuthenticated && (
           <div className="flex gap-3 justify-center">
-            <Link to="/register" className="forge-btn-primary inline-flex">
-              Join FORGE
+            <Link to="/register" className="guild-btn-primary inline-flex">
+              Join The Guild
             </Link>
-            <Link to="/discover" className="forge-btn-secondary inline-flex">
+            <Link to="/discover" className="guild-btn-secondary inline-flex">
               Browse professionals
             </Link>
           </div>
@@ -50,7 +50,7 @@ export function JobsPage() {
         <h2 className="text-xl font-semibold text-charcoal-100 mb-6 text-center">How it will work</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {steps.map(({ icon: Icon, title, description }, i) => (
-            <div key={title} className="forge-card p-6 space-y-3">
+            <div key={title} className="guild-card p-6 space-y-3">
               <div className="flex items-center gap-3">
                 <span className="h-7 w-7 rounded-full bg-copper-900/50 border border-copper-700 text-copper-400 text-sm flex items-center justify-center font-semibold">
                   {i + 1}
@@ -65,14 +65,14 @@ export function JobsPage() {
       </div>
 
       {/* Transparency note */}
-      <div className="forge-card p-6 space-y-3">
+      <div className="guild-card p-6 space-y-3">
         <h2 className="font-semibold text-charcoal-100">Transparent by design</h2>
         <p className="text-sm text-charcoal-400 leading-relaxed">
-          When you receive quotes on FORGE, you'll see the professional's full track record —
-          verified jobs, customer reviews, ratings, and credentials. FORGE never secretly
+          When you receive quotes on The Guild, you'll see the professional's full track record —
+          verified jobs, customer reviews, ratings, and credentials. The Guild never secretly
           decides who is "best." You see the evidence and make the call.
         </p>
-        <Link to="/discover" className="forge-btn-ghost text-sm inline-flex">
+        <Link to="/discover" className="guild-btn-ghost text-sm inline-flex">
           Browse professionals now
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>

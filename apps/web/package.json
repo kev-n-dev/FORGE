@@ -1,5 +1,5 @@
 {
-  "name": "@forge/web",
+  "name": "@guild/web",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -13,9 +13,9 @@
     "clean": "rm -rf dist *.tsbuildinfo"
   },
   "dependencies": {
-    "@forge/config": "workspace:*",
-    "@forge/types": "workspace:*",
-    "@forge/validation": "workspace:*",
+    "@guild/config": "workspace:*",
+    "@guild/types": "workspace:*",
+    "@guild/validation": "workspace:*",
     "@tanstack/react-query": "^5.56.2",
     "@tanstack/react-router": "^1.58.3",
     "clsx": "^2.1.1",

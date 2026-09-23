@@ -1,7 +1,7 @@
 /**
  * Cloudflare Worker bindings and Hono context types.
  */
-import type { UserRole } from "@forge/types";
+import type { UserRole } from "@guild/types";
 
 /** Matches the [vars] / bindings in wrangler.toml */
 export interface Env {

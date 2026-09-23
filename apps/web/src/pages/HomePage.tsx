@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Search, Shield, Star, Hammer, Wrench, Layers } from "lucide-react";
+import { Shield, Search, Star, Layers, Wrench } from "lucide-react";
 
 export function HomePage() {
   const categories = [
@@ -16,8 +16,8 @@ export function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 relative">
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 mb-6">
-              <Hammer className="h-7 w-7 text-copper-500" aria-hidden="true" />
-              <span className="text-copper-400 font-semibold tracking-wide uppercase text-sm">FORGE</span>
+              <Shield className="h-7 w-7 text-copper-500" aria-hidden="true" />
+              <span className="text-copper-400 font-semibold tracking-wide uppercase text-sm">The Guild</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold text-charcoal-50 leading-tight mb-6">
               Build your reputation.
@@ -27,11 +27,11 @@ export function HomePage() {
               Show your work. Get discovered. Build your business.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link to="/discover" className="forge-btn-primary text-base px-8 py-4">
+              <Link to="/discover" className="guild-btn-primary text-base px-8 py-4">
                 <Search className="h-5 w-5" aria-hidden="true" />
                 Find Professionals
               </Link>
-              <Link to="/register" className="forge-btn-secondary text-base px-8 py-4">
+              <Link to="/register" className="guild-btn-secondary text-base px-8 py-4">
                 Join as a Professional
               </Link>
             </div>
@@ -63,10 +63,10 @@ export function HomePage() {
                 icon: Shield,
                 title: "Trust through evidence",
                 description:
-                  "FORGE shows customers evidence and lets them decide. No secret rankings. No manipulated results.",
+                  "The Guild shows customers evidence and lets them decide. No secret rankings. No manipulated results.",
               },
             ].map(({ icon: Icon, title, description }) => (
-              <div key={title} className="forge-card p-6 space-y-4">
+              <div key={title} className="guild-card p-6 space-y-4">
                 <div className="h-10 w-10 bg-copper-900/50 rounded-lg flex items-center justify-center">
                   <Icon className="h-5 w-5 text-copper-400" aria-hidden="true" />
                 </div>
@@ -115,7 +115,7 @@ export function HomePage() {
             Create your profile, show your work, get hired, collect verified reviews, and build a
             public professional identity that grows with your career.
           </p>
-          <Link to="/register" className="forge-btn-primary text-base px-8 py-4 inline-flex">
+          <Link to="/register" className="guild-btn-primary text-base px-8 py-4 inline-flex">
             Start Building Your Profile
           </Link>
         </div>

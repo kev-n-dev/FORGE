@@ -6,9 +6,9 @@
  */
 
 import { Hono } from "hono";
-import { searchProfessionals, getAllActiveCategories } from "@forge/database";
-import { ProfessionalSearchSchema } from "@forge/validation";
-import { ReputationLevel } from "@forge/types";
+import { searchProfessionals, getAllActiveCategories } from "@guild/database";
+import { ProfessionalSearchSchema } from "@guild/validation";
+import { ReputationLevel } from "@guild/types";
 import type { Env, HonoVariables } from "../types";
 import { ok, paginated, buildPaginationMeta } from "../utils/response";
 import { validate } from "../utils/validate";

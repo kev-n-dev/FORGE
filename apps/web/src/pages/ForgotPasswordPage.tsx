@@ -6,7 +6,7 @@ import { z } from "zod";
 import { api, ApiClientError } from "@/lib/api";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { Hammer, AlertCircle, CheckCircle2, ArrowLeft } from "lucide-react";
+import { Shield, AlertCircle, CheckCircle2, XCircle, Loader2, ArrowLeft, ArrowRight, ChevronRight, ChevronLeft, Home, Search } from "lucide-react";
 
 const Schema = z.object({
   email: z.string().email("Invalid email address").trim().toLowerCase(),
@@ -42,8 +42,8 @@ export function ForgotPasswordPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
-            <span className="text-2xl font-bold">FORGE</span>
+            <Shield className="h-8 w-8 text-copper-500" aria-hidden="true" />
+            <span className="text-2xl font-bold">The Guild</span>
           </div>
           <h1 className="text-xl font-semibold text-charcoal-100">Reset your password</h1>
           <p className="text-charcoal-400 text-sm mt-1">
@@ -52,19 +52,19 @@ export function ForgotPasswordPage() {
         </div>
 
         {sent ? (
-          <div className="forge-card p-6 text-center space-y-4">
+          <div className="guild-card p-6 text-center space-y-4">
             <CheckCircle2 className="h-12 w-12 text-green-400 mx-auto" />
             <h2 className="text-lg font-semibold text-charcoal-100">Check your email</h2>
             <p className="text-charcoal-400 text-sm">
               If an account exists for that email, a reset link has been sent. Check your inbox
               and spam folder.
             </p>
-            <Link to="/login" className="forge-btn-primary inline-flex">
+            <Link to="/login" className="guild-btn-primary inline-flex">
               Back to sign in
             </Link>
           </div>
         ) : (
-          <div className="forge-card p-6">
+          <div className="guild-card p-6">
             {serverError && (
               <div className="flex items-center gap-3 bg-red-900/30 border border-red-800 rounded-lg p-4 mb-6 text-sm text-red-300" role="alert">
                 <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />

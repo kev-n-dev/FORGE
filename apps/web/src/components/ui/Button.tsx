@@ -13,9 +13,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants: Record<Variant, string> = {
-  primary: "forge-btn-primary",
-  secondary: "forge-btn-secondary",
-  ghost: "forge-btn-ghost",
+  primary: "guild-btn-primary",
+  secondary: "guild-btn-secondary",
+  ghost: "guild-btn-ghost",
   danger:
     "inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold bg-red-700 text-white hover:bg-red-600 active:bg-red-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150",
 };

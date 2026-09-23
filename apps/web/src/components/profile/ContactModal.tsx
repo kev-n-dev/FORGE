@@ -79,7 +79,7 @@ export function ContactModal({
       />
 
       {/* Panel */}
-      <div className="relative forge-card w-full max-w-lg p-6 space-y-5 animate-slide-up">
+      <div className="relative guild-card w-full max-w-lg p-6 space-y-5 animate-slide-up">
         {/* Header */}
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -108,7 +108,7 @@ export function ContactModal({
             <div className="space-y-2">
               <Link
                 to="/register"
-                className="forge-btn-primary w-full inline-flex justify-center"
+                className="guild-btn-primary w-full inline-flex justify-center"
                 onClick={onClose}
               >
                 Create free account
@@ -117,7 +117,7 @@ export function ContactModal({
               <Link
                 to="/login"
                 search={{ redirect: `/people/${professionalSlug}` }}
-                className="forge-btn-secondary w-full inline-flex justify-center"
+                className="guild-btn-secondary w-full inline-flex justify-center"
                 onClick={onClose}
               >
                 Sign in
@@ -151,7 +151,7 @@ export function ContactModal({
 
             {/* Message textarea */}
             <div>
-              <label htmlFor="contact-message" className="forge-label">
+              <label htmlFor="contact-message" className="guild-label">
                 Message
               </label>
               <textarea
@@ -161,7 +161,7 @@ export function ContactModal({
                 rows={mode === "quote" ? 8 : 4}
                 maxLength={4000}
                 placeholder={mode === "contact" ? `Say hello to ${professionalName}…` : undefined}
-                className="forge-input resize-none mt-1.5 w-full"
+                className="guild-input resize-none mt-1.5 w-full"
                 autoFocus
               />
               <p className="text-xs text-charcoal-500 mt-1 text-right">

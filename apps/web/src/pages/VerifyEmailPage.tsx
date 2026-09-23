@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useSearch } from "@tanstack/react-router";
 import { api } from "@/lib/api";
-import { Hammer, CheckCircle2, XCircle, Loader2 } from "lucide-react";
+import { Shield, AlertCircle, CheckCircle2, XCircle, Loader2, ArrowLeft, ArrowRight, ChevronRight, ChevronLeft, Home, Search } from "lucide-react";
 import { ApiClientError } from "@/lib/api";
 
 type Status = "verifying" | "success" | "error" | "missing";
@@ -30,8 +30,8 @@ export function VerifyEmailPage() {
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md text-center space-y-6">
         <div className="flex items-center justify-center gap-2">
-          <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
-          <span className="text-2xl font-bold">FORGE</span>
+          <Shield className="h-8 w-8 text-copper-500" aria-hidden="true" />
+          <span className="text-2xl font-bold">The Guild</span>
         </div>
 
         {status === "verifying" && (
@@ -51,8 +51,8 @@ export function VerifyEmailPage() {
               <h1 className="text-xl font-semibold text-charcoal-100">Email verified!</h1>
               <p className="text-charcoal-400 mt-1">Your account is now active.</p>
             </div>
-            <Link to="/login" className="forge-btn-primary inline-flex">
-              Sign in to FORGE
+            <Link to="/login" className="guild-btn-primary inline-flex">
+              Sign in to The Guild
             </Link>
           </>
         )}
@@ -65,7 +65,7 @@ export function VerifyEmailPage() {
               <p className="text-charcoal-400 mt-1">{errorMessage}</p>
             </div>
             <div className="space-y-3">
-              <Link to="/register" className="forge-btn-primary inline-flex">
+              <Link to="/register" className="guild-btn-primary inline-flex">
                 Register again
               </Link>
               <div>
@@ -86,7 +86,7 @@ export function VerifyEmailPage() {
                 This verification link is missing a token. Check your email for the correct link.
               </p>
             </div>
-            <Link to="/" className="forge-btn-secondary inline-flex">
+            <Link to="/" className="guild-btn-secondary inline-flex">
               Go home
             </Link>
           </>

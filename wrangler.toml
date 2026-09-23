@@ -1,13 +1,12 @@
-# FORGE — Cloudflare Workers configuration
+# The Guild — Cloudflare Workers configuration
 
-name = "forge"
+name = "the-guild"
 main = "apps/worker/src/index.ts"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
 # ---------------------------------------------------------------------------
 # Static Assets — serves the React frontend
-# The worker handles /api/* routes; everything else serves the frontend.
 # ---------------------------------------------------------------------------
 [assets]
 directory = "apps/web/dist"
@@ -51,11 +50,11 @@ bucket_name = "forge-private"
 # ---------------------------------------------------------------------------
 # [[queues.producers]]
 # binding = "NOTIFICATION_QUEUE"
-# queue = "forge-notifications"
+# queue = "the-guild-notifications"
 #
 # [[queues.producers]]
 # binding = "MODERATION_QUEUE"
-# queue = "forge-moderation"
+# queue = "the-guild-moderation"
 
 # ---------------------------------------------------------------------------
 # Cron Triggers — uncomment when background jobs are implemented
@@ -68,10 +67,9 @@ bucket_name = "forge-private"
 
 # ---------------------------------------------------------------------------
 # Environment variables (non-secret)
-# Secrets (AUTH_SECRET, TURNSTILE_SECRET) are set via the Cloudflare dashboard
-# under Workers → forge → Settings → Variables & Secrets
+# Secrets are set via Cloudflare dashboard → Workers → the-guild → Settings → Variables & Secrets
 # ---------------------------------------------------------------------------
 [vars]
 ENVIRONMENT = "production"
-MEDIA_BASE_URL = "https://forge.kc-labs.workers.dev"
+MEDIA_BASE_URL = "https://the-guild.kc-labs.workers.dev"
 TURNSTILE_SITE_KEY = "1x00000000000000000000AA"

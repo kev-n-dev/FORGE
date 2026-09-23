@@ -4,7 +4,7 @@ import {
   ReportStatus,
   DisputeStatus,
   VerificationStatus,
-} from "@forge/types";
+} from "@guild/types";
 import { zId, zSafeText } from "./common";
 
 export const AdminUpdateUserStatusSchema = z.object({

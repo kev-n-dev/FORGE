@@ -4,11 +4,11 @@
  */
 
 export const PLATFORM = {
-  name: "FORGE",
-  tagline: "Build your reputation.",
+  name: "The Guild",
+  tagline: "Where skilled work is recognized.",
   description: "The professional network for people who make, build and create.",
-  url: "https://forge.example.com", // Override via env in production
-  supportEmail: "support@forge.example.com",
+  url: "https://theguild.example.com",
+  supportEmail: "support@theguild.example.com",
   version: "0.1.0",
 } as const;
 

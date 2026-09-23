@@ -1,8 +1,8 @@
-# FORGE Security
+# The Guild Security
 
 ## Reporting Vulnerabilities
 
-Email: security@forge.example.com  
+Email: security@theguild.example.com  
 Please do **not** open public GitHub issues for security vulnerabilities.
 
 We aim to acknowledge reports within 48 hours and resolve critical issues within 7 days.
@@ -57,7 +57,7 @@ We aim to acknowledge reports within 48 hours and resolve critical issues within
 
 ## API Security
 
-- **CORS**: Allow-list of origins — `forge.example.com` only in production
+- **CORS**: Allow-list of origins — `theguild.example.com` only in production
 - **Security headers** on every response:
   - `Content-Security-Policy`
   - `X-Content-Type-Options: nosniff`

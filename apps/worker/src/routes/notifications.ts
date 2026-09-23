@@ -4,7 +4,7 @@
  * POST /api/notifications/:id/read — mark as read
  */
 import { Hono } from "hono";
-import { dbAll, dbRun, now } from "@forge/database";
+import { dbAll, dbRun, now } from "@guild/database";
 import type { Env, HonoVariables } from "../types";
 import { ok } from "../utils/response";
 import { requireAuth } from "../middleware/auth";

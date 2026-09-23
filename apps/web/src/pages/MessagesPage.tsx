@@ -6,7 +6,7 @@ import { api, ApiClientError } from "@/lib/api";
 import { Avatar } from "@/components/ui/Avatar";
 import { Spinner } from "@/components/ui/Spinner";
 import { Button } from "@/components/ui/Button";
-import type { ConversationSummary, ConversationThread, Message } from "@forge/types";
+import type { ConversationSummary, ConversationThread, Message } from "@guild/types";
 import {
   MessageSquare, Send, ArrowLeft, MoreVertical, Trash2, AlertCircle, Check,
 } from "lucide-react";
@@ -132,7 +132,7 @@ function MessageBubble({
           {showMenu && (
             <>
               <div className="fixed inset-0 z-10" onClick={() => setShowMenu(false)} aria-hidden="true" />
-              <div className="absolute z-20 mt-1 right-0 forge-card p-1 w-36 shadow-lg">
+              <div className="absolute z-20 mt-1 right-0 guild-card p-1 w-36 shadow-lg">
                 <button
                   type="button"
                   onClick={() => { onRetract(msg.id); setShowMenu(false); }}
@@ -306,7 +306,7 @@ function ThreadPanel({
             placeholder="Write a message… (Enter to send, Shift+Enter for new line)"
             rows={1}
             maxLength={4000}
-            className="forge-input flex-1 resize-none min-h-[44px] max-h-40 overflow-y-auto"
+            className="guild-input flex-1 resize-none min-h-[44px] max-h-40 overflow-y-auto"
             style={{ height: "auto" }}
             onInput={(e) => {
               const el = e.currentTarget;
@@ -378,7 +378,7 @@ export function MessagesPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="h-[calc(100vh-10rem)] min-h-96 forge-card overflow-hidden flex">
+      <div className="h-[calc(100vh-10rem)] min-h-96 guild-card overflow-hidden flex">
         {/* ----------------------------------------------------------------
             Conversation List — always visible on lg, hidden on mobile when
             a thread is open

@@ -31,9 +31,9 @@ import {
   expiresInHours,
   isExpired,
   verifyTurnstile,
-} from "@forge/auth";
-import type { RefreshTokenPayload } from "@forge/auth";
-import { UserRole } from "@forge/types";
+} from "@guild/auth";
+import type { RefreshTokenPayload } from "@guild/auth";
+import { UserRole } from "@guild/types";
 import {
   LoginSchema,
   RegisterSchema,
@@ -41,7 +41,7 @@ import {
   PasswordResetConfirmSchema,
   ChangePasswordSchema,
   EmailVerificationSchema,
-} from "@forge/validation";
+} from "@guild/validation";
 import {
   findUserByEmail,
   findUserById,
@@ -56,8 +56,8 @@ import {
   findPasswordResetToken,
   consumePasswordResetToken,
   createProfessionalProfile,
-} from "@forge/database";
-import { generateSlug } from "@forge/config";
+} from "@guild/database";
+import { generateSlug } from "@guild/config";
 import type { Env, HonoVariables } from "../types";
 import { ok, err } from "../utils/response";
 import { validate } from "../utils/validate";

@@ -5,8 +5,8 @@
  */
 
 import type { MiddlewareHandler } from "hono";
-import { verifyToken } from "@forge/auth";
-import type { AccessTokenPayload } from "@forge/auth";
+import { verifyToken } from "@guild/auth";
+import type { AccessTokenPayload } from "@guild/auth";
 import type { Env, HonoVariables } from "../types";
 import { err } from "../utils/response";
 
