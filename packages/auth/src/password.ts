@@ -7,7 +7,7 @@
 
 const ALGORITHM = "PBKDF2";
 const HASH = "SHA-256";
-const ITERATIONS = 310_000; // NIST-recommended 2024 minimum
+const ITERATIONS = 100_000; // Cloudflare Workers PBKDF2 maximum
 const KEY_LENGTH = 32; // 256-bit derived key
 
 function toBase64(buf: ArrayBuffer): string {
