@@ -20,7 +20,8 @@
     "migrate:local": "pnpm --filter @forge/database run migrate:local",
     "migrate:remote": "pnpm --filter @forge/database run migrate:remote",
     "seed:local": "pnpm --filter @forge/database run seed:local",
-    "clean": "pnpm -r run clean && rm -rf node_modules"
+    "clean": "pnpm -r run clean && rm -rf node_modules",
+    "redeploy": "git commit --allow-empty -m \"chore: trigger redeploy\" && git push origin main"
   },
   "devDependencies": {
     "@playwright/test": "^1.47.0",
