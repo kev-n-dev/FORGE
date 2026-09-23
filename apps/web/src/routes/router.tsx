@@ -23,6 +23,7 @@ import { JobsPage } from "@/pages/JobsPage";
 import { SettingsPage } from "@/pages/SettingsPage";
 import { SafetyCenterPage, PrivacyPage, TermsPage } from "@/pages/StaticPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { SavedPage } from "@/pages/SavedPage";
 
 // Admin
 import { AdminLayout } from "@/components/layout/AdminLayout";
@@ -130,6 +131,12 @@ const settingsRoute = createRoute({
   component: SettingsPage,
 });
 
+const savedRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/saved",
+  component: SavedPage,
+});
+
 const safetyRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/safety",
@@ -184,6 +191,7 @@ const routeTree = rootRoute.addChildren([
   profileSetupRoute,
   profileEditRoute,
   settingsRoute,
+  savedRoute,
   // Static
   safetyRoute,
   privacyRoute,

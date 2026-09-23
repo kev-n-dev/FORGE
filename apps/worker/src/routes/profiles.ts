@@ -1,16 +1,21 @@
 /**
  * Professional profile routes
- * GET  /api/profiles/:slug          — public profile
- * GET  /api/profiles/me             — own profile (authenticated)
- * PUT  /api/profiles/me             — update own profile
- * POST /api/profiles/me/avatar      — upload avatar
- * POST /api/profiles/me/cover       — upload cover
- * GET  /api/profiles/:slug/skills
- * POST /api/profiles/me/skills
- * DELETE /api/profiles/me/skills/:id
- * GET  /api/profiles/:slug/services
- * POST /api/profiles/me/services
- * GET  /api/profiles/:slug/trust-card
+ *
+ * IMPORTANT: /me routes MUST be registered before /:slug routes in Hono
+ * to prevent "me" being matched as a slug parameter.
+ *
+ * GET  /api/profiles/me                  — own profile (authenticated)
+ * PUT  /api/profiles/me                  — update own profile
+ * PUT  /api/profiles/me/avatar/upload    — upload avatar directly
+ * POST /api/profiles/me/skills           — add skill
+ * DELETE /api/profiles/me/skills/:id     — remove skill
+ * POST /api/profiles/me/services         — add service
+ * GET  /api/profiles/categories          — all active categories
+ * GET  /api/profiles/:slug               — public profile
+ * GET  /api/profiles/:slug/skills        — skills for a profile
+ * GET  /api/profiles/:slug/services      — services for a profile
+ * GET  /api/profiles/:slug/trust-card    — trust card evidence
+ * GET  /api/profiles/:slug/projects      — portfolio projects
  */
 
 import { Hono } from "hono";
@@ -22,15 +27,21 @@ import {
   addProfessionalSkill,
   removeProfessionalSkill,
   updateProfessionalAvatar,
-  updateProfessionalCover,
   getAllActiveCategories,
+  getProjectsByProfessional,
+  getProjectMedia,
+  dbFirst,
+  dbAll,
+  dbRun,
+  newId,
+  now,
 } from "@forge/database";
 import {
   UpdateProfessionalProfileSchema,
   AddSkillSchema,
   AddServiceSchema,
 } from "@forge/validation";
-import { isAllowedMimeType, isAllowedSize, R2_KEY_PREFIXES, UPLOAD_URL_TTL_SECONDS } from "@forge/config";
+import { isAllowedMimeType, isAllowedSize, R2_KEY_PREFIXES } from "@forge/config";
 import { assertOwnerOrAdmin, NotFoundError } from "@forge/auth";
 import { UserRole } from "@forge/types";
 import type { Env, HonoVariables } from "../types";
@@ -38,33 +49,19 @@ import { ok, err, created } from "../utils/response";
 import { validate } from "../utils/validate";
 import { requireAuth, optionalAuth } from "../middleware/auth";
 import { apiRateLimit } from "../middleware/ratelimit";
-import { dbRun, dbFirst, newId, now } from "@forge/database";
 
 const profiles = new Hono<{ Bindings: Env; Variables: HonoVariables }>();
 
 // ---------------------------------------------------------------------------
-// GET /api/profiles/:slug — public
+// /me routes FIRST — must come before /:slug to avoid Hono matching "me" as slug
 // ---------------------------------------------------------------------------
-profiles.get("/:slug", optionalAuth, async (c) => {
-  const slug = c.req.param("slug");
-  const profile = await findProfessionalBySlug(c.env.DB, slug);
-  if (!profile) throw new NotFoundError("Profile");
 
-  return ok(c, profile);
-});
-
-// ---------------------------------------------------------------------------
-// GET /api/profiles/me — own profile
-// ---------------------------------------------------------------------------
 profiles.get("/me", requireAuth, async (c) => {
   const profile = await findProfessionalByUserId(c.env.DB, c.get("userId"));
   if (!profile) throw new NotFoundError("Professional profile");
   return ok(c, profile);
 });
 
-// ---------------------------------------------------------------------------
-// PUT /api/profiles/me — update own profile
-// ---------------------------------------------------------------------------
 profiles.put("/me", requireAuth, apiRateLimit, async (c) => {
   const body = await c.req.json().catch(() => null);
   const parsed = validate(UpdateProfessionalProfileSchema, body);
@@ -89,52 +86,13 @@ profiles.put("/me", requireAuth, apiRateLimit, async (c) => {
     isPublic: parsed.data.isPublic,
   });
 
+  // Update FTS index
+  await updateProfileFts(c.env.DB, profile.id);
+
   const updated = await findProfessionalByUserId(c.env.DB, c.get("userId"));
   return ok(c, updated);
 });
 
-// ---------------------------------------------------------------------------
-// POST /api/profiles/me/avatar — get signed upload URL for avatar
-// ---------------------------------------------------------------------------
-profiles.post("/me/avatar", requireAuth, async (c) => {
-  const profile = await findProfessionalByUserId(c.env.DB, c.get("userId"));
-  if (!profile) throw new NotFoundError("Professional profile");
-
-  const body = await c.req.json().catch(() => null) as { mimeType?: string; sizeBytes?: number } | null;
-  const mimeType = body?.mimeType ?? "image/jpeg";
-  const sizeBytes = body?.sizeBytes ?? 0;
-
-  if (!isAllowedMimeType("avatar", mimeType)) {
-    return err(c, "INVALID_MIME", "File type not allowed for avatars.", 400);
-  }
-  if (!isAllowedSize("avatar", sizeBytes)) {
-    return err(c, "FILE_TOO_LARGE", "File exceeds maximum size for avatars.", 400);
-  }
-
-  const objectKey = `${R2_KEY_PREFIXES.avatar}${profile.id}/${crypto.randomUUID()}`;
-  const ext = mimeType.split("/")[1] ?? "jpg";
-  const finalKey = `${objectKey}.${ext}`;
-
-  // R2 signed upload URL
-  const uploadUrl = await (c.env.MEDIA_BUCKET as R2Bucket & {
-    createMultipartUpload: unknown;
-    // Standard presigned URL generation not yet in workers-types, use workaround
-  });
-
-  // Return the key for a direct PUT — caller uses presigned URL pattern
-  // The actual presigned URL would use: c.env.MEDIA_BUCKET.createSignedUrl(...)
-  // This placeholder returns the key; wrangler r2 presigning is done at CF edge.
-  return ok(c, {
-    uploadId: finalKey,
-    objectKey: finalKey,
-    // In production, use a Worker R2 binding or Cloudflare Images API for presigned URLs
-    message: "Upload via PUT to /api/profiles/me/avatar/upload with key.",
-  });
-});
-
-// ---------------------------------------------------------------------------
-// PUT /api/profiles/me/avatar/upload — accept avatar upload directly
-// ---------------------------------------------------------------------------
 profiles.put("/me/avatar/upload", requireAuth, async (c) => {
   const profile = await findProfessionalByUserId(c.env.DB, c.get("userId"));
   if (!profile) throw new NotFoundError("Professional profile");
@@ -152,9 +110,7 @@ profiles.put("/me/avatar/upload", requireAuth, async (c) => {
   const ext = contentType.split("/")[1] ?? "jpg";
   const objectKey = `${R2_KEY_PREFIXES.avatar}${profile.id}/${crypto.randomUUID()}.${ext}`;
 
-  await c.env.MEDIA_BUCKET.put(objectKey, body, {
-    httpMetadata: { contentType },
-  });
+  await c.env.MEDIA_BUCKET.put(objectKey, body, { httpMetadata: { contentType } });
 
   const publicUrl = `${c.env.MEDIA_BASE_URL}/${objectKey}`;
   await updateProfessionalAvatar(c.env.DB, profile.id, publicUrl);
@@ -162,20 +118,6 @@ profiles.put("/me/avatar/upload", requireAuth, async (c) => {
   return ok(c, { avatarUrl: publicUrl });
 });
 
-// ---------------------------------------------------------------------------
-// GET /api/profiles/:slug/skills
-// ---------------------------------------------------------------------------
-profiles.get("/:slug/skills", async (c) => {
-  const slug = c.req.param("slug");
-  const profile = await findProfessionalBySlug(c.env.DB, slug);
-  if (!profile) throw new NotFoundError("Profile");
-  const skills = await getProfessionalSkills(c.env.DB, profile.id);
-  return ok(c, skills);
-});
-
-// ---------------------------------------------------------------------------
-// POST /api/profiles/me/skills
-// ---------------------------------------------------------------------------
 profiles.post("/me/skills", requireAuth, async (c) => {
   const body = await c.req.json().catch(() => null);
   const parsed = validate(AddSkillSchema, body);
@@ -190,29 +132,122 @@ profiles.post("/me/skills", requireAuth, async (c) => {
     featured: parsed.data.featured,
   });
 
+  // Update FTS
+  await updateProfileFts(c.env.DB, profile.id);
+
   return created(c, { id, name: parsed.data.name });
 });
 
-// ---------------------------------------------------------------------------
-// DELETE /api/profiles/me/skills/:skillId
-// ---------------------------------------------------------------------------
 profiles.delete("/me/skills/:skillId", requireAuth, async (c) => {
   const profile = await findProfessionalByUserId(c.env.DB, c.get("userId"));
   if (!profile) throw new NotFoundError("Professional profile");
 
   await removeProfessionalSkill(c.env.DB, c.req.param("skillId"), profile.id);
+  await updateProfileFts(c.env.DB, profile.id);
+
   return ok(c, { message: "Skill removed." });
 });
 
+profiles.post("/me/services", requireAuth, async (c) => {
+  const body = await c.req.json().catch(() => null);
+  const parsed = validate(AddServiceSchema, body);
+  if (!parsed.success) return err(c, "VALIDATION_ERROR", "Validation failed", 422, parsed.errors);
+
+  const profile = await findProfessionalByUserId(c.env.DB, c.get("userId"));
+  if (!profile) throw new NotFoundError("Professional profile");
+
+  const id = newId();
+  const ts = now();
+  await dbRun(
+    c.env.DB,
+    `INSERT INTO services (id, professional_id, name, description, category_id, starting_price, currency, price_unit, is_active, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)`,
+    id,
+    profile.id,
+    parsed.data.name,
+    parsed.data.description ?? null,
+    parsed.data.categoryId,
+    parsed.data.startingPrice ?? null,
+    parsed.data.currency ?? null,
+    parsed.data.priceUnit ?? null,
+    ts,
+    ts
+  );
+
+  return created(c, { id, name: parsed.data.name });
+});
+
 // ---------------------------------------------------------------------------
-// GET /api/profiles/:slug/trust-card
+// GET /api/profiles/categories — must be before /:slug
 // ---------------------------------------------------------------------------
-profiles.get("/:slug/trust-card", async (c) => {
+profiles.get("/categories", async (c) => {
+  const cats = await getAllActiveCategories(c.env.DB);
+  return ok(c, cats);
+});
+
+// ---------------------------------------------------------------------------
+// /:slug routes AFTER all /me and named routes
+// ---------------------------------------------------------------------------
+
+profiles.get("/:slug", optionalAuth, async (c) => {
   const slug = c.req.param("slug");
   const profile = await findProfessionalBySlug(c.env.DB, slug);
   if (!profile) throw new NotFoundError("Profile");
+  return ok(c, profile);
+});
 
-  // Gather verification badges
+profiles.get("/:slug/skills", async (c) => {
+  const profile = await findProfessionalBySlug(c.env.DB, c.req.param("slug"));
+  if (!profile) throw new NotFoundError("Profile");
+  return ok(c, await getProfessionalSkills(c.env.DB, profile.id));
+});
+
+profiles.get("/:slug/services", async (c) => {
+  const profile = await findProfessionalBySlug(c.env.DB, c.req.param("slug"));
+  if (!profile) throw new NotFoundError("Profile");
+
+  const services = await dbAll(
+    c.env.DB,
+    `SELECT s.*, c.name as category_name
+     FROM services s
+     LEFT JOIN categories c ON c.id = s.category_id
+     WHERE s.professional_id = ? AND s.is_active = 1
+     ORDER BY s.created_at ASC`,
+    profile.id
+  );
+  return ok(c, services);
+});
+
+profiles.get("/:slug/projects", async (c) => {
+  const profile = await findProfessionalBySlug(c.env.DB, c.req.param("slug"));
+  if (!profile) throw new NotFoundError("Profile");
+
+  const page = Number(c.req.query("page") ?? "1");
+  const pageSize = Math.min(Number(c.req.query("pageSize") ?? "12"), 50);
+
+  const projects = await getProjectsByProfessional(c.env.DB, profile.id, page, pageSize);
+
+  // Attach media for each project
+  const withMedia = await Promise.all(
+    projects.map(async (p) => ({
+      ...p,
+      media: await getProjectMedia(c.env.DB, p.id),
+    }))
+  );
+
+  const countRow = await dbFirst<{ cnt: number }>(
+    c.env.DB,
+    "SELECT COUNT(*) as cnt FROM projects WHERE professional_id = ? AND status = 'published'",
+    profile.id
+  );
+
+  return ok(c, { items: withMedia, total: countRow?.cnt ?? 0 });
+});
+
+profiles.get("/:slug/trust-card", async (c) => {
+  const profile = await findProfessionalBySlug(c.env.DB, c.req.param("slug"));
+  if (!profile) throw new NotFoundError("Profile");
+
   const verifications = await dbFirst<{ identity: number; business: number }>(
     c.env.DB,
     `SELECT
@@ -222,9 +257,8 @@ profiles.get("/:slug/trust-card", async (c) => {
     profile.id
   );
 
-  const memberSinceDate = new Date(profile.member_since);
   const yearsActive = Math.floor(
-    (Date.now() - memberSinceDate.getTime()) / (1000 * 60 * 60 * 24 * 365)
+    (Date.now() - new Date(profile.member_since).getTime()) / (1000 * 60 * 60 * 24 * 365)
   );
 
   const portfolioCount = await dbFirst<{ cnt: number }>(
@@ -237,7 +271,7 @@ profiles.get("/:slug/trust-card", async (c) => {
     c.env.DB,
     "SELECT COUNT(*) as cnt FROM recommendations WHERE professional_id = ? AND status = 'active'",
     profile.id
-  );
+  ).catch(() => ({ cnt: 0 }));
 
   return ok(c, {
     identityVerified: verifications?.identity === 1,
@@ -255,11 +289,33 @@ profiles.get("/:slug/trust-card", async (c) => {
 });
 
 // ---------------------------------------------------------------------------
-// GET /api/profiles/categories — all active categories
+// FTS helper — called after profile/skill updates
 // ---------------------------------------------------------------------------
-profiles.get("/categories", async (c) => {
-  const cats = await getAllActiveCategories(c.env.DB);
-  return ok(c, cats);
-});
+async function updateProfileFts(db: D1Database, professionalId: string): Promise<void> {
+  const profile = await findProfessionalByUserId(db, professionalId)
+    ?? await dbFirst<{ id: string; display_name: string; business_name: string | null; tagline: string | null; bio: string | null }>(
+      db, "SELECT id, display_name, business_name, tagline, bio FROM professional_profiles WHERE id = ?", professionalId
+    );
+  if (!profile) return;
+
+  const skills = await getProfessionalSkills(db, professionalId);
+  const skillText = skills.map((s) => s.name).join(" ");
+
+  // Delete existing FTS row then re-insert (FTS5 contentless pattern)
+  await db.prepare("DELETE FROM professional_search_fts WHERE professional_id = ?")
+    .bind(professionalId).run();
+
+  await db.prepare(
+    `INSERT INTO professional_search_fts (professional_id, display_name, business_name, tagline, bio, skills, categories)
+     VALUES (?, ?, ?, ?, ?, ?, '')`
+  ).bind(
+    professionalId,
+    "display_name" in profile ? profile.display_name : "",
+    "business_name" in profile ? (profile.business_name ?? "") : "",
+    "tagline" in profile ? (profile.tagline ?? "") : "",
+    "bio" in profile ? (profile.bio ?? "") : "",
+    skillText
+  ).run();
+}
 
 export { profiles as profilesRouter };

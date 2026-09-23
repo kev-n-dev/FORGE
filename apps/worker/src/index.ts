@@ -22,6 +22,8 @@ import { reviewsRouter } from "./routes/reviews";
 import { searchRouter } from "./routes/search";
 import { adminRouter } from "./routes/admin";
 import { configRouter } from "./routes/config";
+import { notificationsRouter } from "./routes/notifications";
+import { reportsRouter } from "./routes/reports";
 
 const app = new Hono<{ Bindings: Env; Variables: HonoVariables }>();
 
@@ -81,6 +83,8 @@ app.route("/api/projects", projectsRouter);
 app.route("/api/reviews", reviewsRouter);
 app.route("/api/search", searchRouter);
 app.route("/api/admin", adminRouter);
+app.route("/api/notifications", notificationsRouter);
+app.route("/api/reports", reportsRouter);
 
 // ---------------------------------------------------------------------------
 // Frontend — fall through to static assets for all non-API routes.

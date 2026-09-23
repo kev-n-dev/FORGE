@@ -94,6 +94,18 @@ export async function createProfessionalProfile(
     ts,
     ts
   );
+
+  // Seed FTS index so the profile is immediately searchable
+  await dbRun(
+    db,
+    `INSERT INTO professional_search_fts (professional_id, display_name, business_name, tagline, bio, skills, categories)
+     VALUES (?, ?, '', '', '', '', '')`,
+    id,
+    params.displayName
+  ).catch(() => {
+    // FTS insert failure is non-fatal — profile still created
+  });
+
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   return (await findProfessionalById(db, id))!;
 }

@@ -1,20 +1,20 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { RegisterSchema, type RegisterInput } from "@forge/validation";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { Hammer, AlertCircle, User, Wrench } from "lucide-react";
+import { Hammer, AlertCircle, User, Wrench, CheckCircle2, Mail } from "lucide-react";
 import { UserRole } from "@forge/types";
 import { cn } from "@/lib/cn";
 import { useState } from "react";
-import { api, setTokens } from "@/lib/api";
-import { authStore } from "@/store/auth";
+import { api } from "@/lib/api";
 import { ApiClientError } from "@/lib/api";
 
 export function RegisterPage() {
-  const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | null>(null);
+  // After successful registration, show the email verification notice
+  const [registered, setRegistered] = useState<{ email: string; role: UserRole } | null>(null);
 
   const {
     register,
@@ -34,15 +34,81 @@ export function RegisterPage() {
     try {
       await api.post("/auth/register", {
         ...data,
-        turnstileToken: data.turnstileToken || "dev-bypass-token",
+        turnstileToken: "XXXX.DUMMY.TOKEN.XXXX",
       });
-      await navigate({ to: "/login" });
+      // Show email verification notice instead of redirecting to login
+      setRegistered({ email: data.email, role: data.role });
     } catch (e) {
       if (e instanceof ApiClientError) setServerError(e.message);
       else setServerError("An unexpected error occurred.");
     }
   };
 
+  // ---------------------------------------------------------------------------
+  // Post-registration success screen
+  // ---------------------------------------------------------------------------
+  if (registered) {
+    return (
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md text-center space-y-6">
+          <div className="flex items-center justify-center gap-2">
+            <Hammer className="h-8 w-8 text-copper-500" aria-hidden="true" />
+            <span className="text-2xl font-bold">FORGE</span>
+          </div>
+
+          <div className="forge-card p-8 space-y-5">
+            <div className="h-16 w-16 rounded-full bg-green-900/30 border border-green-700 flex items-center justify-center mx-auto">
+              <Mail className="h-8 w-8 text-green-400" aria-hidden="true" />
+            </div>
+            <div>
+              <h1 className="text-xl font-semibold text-charcoal-100">Check your email</h1>
+              <p className="text-charcoal-400 text-sm mt-2 leading-relaxed">
+                We sent a verification link to{" "}
+                <span className="text-charcoal-200 font-medium">{registered.email}</span>.
+                Click the link to activate your account.
+              </p>
+            </div>
+
+            <div className="bg-charcoal-800 rounded-lg p-4 text-left space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wider text-charcoal-500">
+                What happens next
+              </p>
+              {[
+                "Check your inbox (and spam folder)",
+                "Click the verification link in the email",
+                registered.role === UserRole.Professional
+                  ? "Set up your professional profile"
+                  : "Start discovering skilled professionals",
+              ].map((step, i) => (
+                <div key={i} className="flex items-center gap-2.5 text-sm text-charcoal-300">
+                  <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0" aria-hidden="true" />
+                  {step}
+                </div>
+              ))}
+            </div>
+
+            <Link to="/login" className="forge-btn-primary w-full inline-flex justify-center">
+              Go to sign in
+            </Link>
+          </div>
+
+          <p className="text-xs text-charcoal-500">
+            Didn't receive the email?{" "}
+            <button
+              className="text-copper-400 hover:text-copper-300 transition-colors"
+              onClick={() => setRegistered(null)}
+            >
+              Try again
+            </button>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Registration form
+  // ---------------------------------------------------------------------------
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-lg">
@@ -71,7 +137,6 @@ export function RegisterPage() {
             className="space-y-5"
             noValidate
           >
-            {/* Role selection */}
             <fieldset>
               <legend className="forge-label">I want to…</legend>
               <div className="grid grid-cols-2 gap-3 mt-1.5">
@@ -102,54 +167,19 @@ export function RegisterPage() {
             </fieldset>
 
             <div className="grid grid-cols-2 gap-4">
-              <Input
-                {...register("firstName")}
-                label="First name"
-                autoComplete="given-name"
-                required
-                error={errors.firstName?.message}
-              />
-              <Input
-                {...register("lastName")}
-                label="Last name"
-                autoComplete="family-name"
-                required
-                error={errors.lastName?.message}
-              />
+              <Input {...register("firstName")} label="First name" autoComplete="given-name" required error={errors.firstName?.message} />
+              <Input {...register("lastName")} label="Last name" autoComplete="family-name" required error={errors.lastName?.message} />
             </div>
-
-            <Input
-              {...register("email")}
-              label="Email address"
-              type="email"
-              autoComplete="email"
-              required
-              error={errors.email?.message}
-            />
-
-            <Input
-              {...register("password")}
-              label="Password"
-              type="password"
-              autoComplete="new-password"
-              required
-              hint="At least 8 characters with uppercase, lowercase, and a number"
-              error={errors.password?.message}
-            />
-
-            <Input
-              {...register("confirmPassword")}
-              label="Confirm password"
-              type="password"
-              autoComplete="new-password"
-              required
-              error={errors.confirmPassword?.message}
-            />
-
+            <Input {...register("email")} label="Email address" type="email" autoComplete="email" required error={errors.email?.message} />
+            <Input {...register("password")} label="Password" type="password" autoComplete="new-password" required hint="At least 8 characters with uppercase, lowercase, and a number" error={errors.password?.message} />
+            <Input {...register("confirmPassword")} label="Confirm password" type="password" autoComplete="new-password" required error={errors.confirmPassword?.message} />
             <input type="hidden" {...register("turnstileToken")} value="XXXX.DUMMY.TOKEN.XXXX" />
 
             <p className="text-xs text-charcoal-500 leading-relaxed">
-              By creating an account you agree to our Terms of Service and Privacy Policy.
+              By creating an account you agree to our{" "}
+              <Link to="/terms" className="text-copper-400 hover:text-copper-300">Terms of Service</Link>
+              {" "}and{" "}
+              <Link to="/privacy" className="text-copper-400 hover:text-copper-300">Privacy Policy</Link>.
             </p>
 
             <Button type="submit" loading={isSubmitting} className="w-full">

@@ -34,7 +34,6 @@ export const SocialLinkSchema = z.object({
 });
 
 export const AddSkillSchema = z.object({
-  categoryId: zId,
   name: z.string().min(1).max(100).trim(),
   yearsExperience: z.number().int().min(0).max(60).optional(),
   featured: z.boolean().default(false),

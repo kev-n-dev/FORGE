@@ -9,19 +9,8 @@ import { StarRating } from "@/components/ui/StarRating";
 import { UserRole } from "@forge/types";
 import type { ProfessionalProfile } from "@forge/types";
 import {
-  Briefcase,
-  Package,
-  MessageSquare,
-  Star,
-  TrendingUp,
-  Settings,
-  Edit3,
-  Eye,
-  ShieldCheck,
-  Bell,
-  Heart,
-  FileText,
-  PlusCircle,
+  Briefcase, Package, MessageSquare, Star, TrendingUp, Settings,
+  Edit3, Eye, ShieldCheck, Heart, FileText, PlusCircle, CheckCircle2,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -67,6 +56,8 @@ function ProfessionalDashboard() {
     { label: "Portfolio", value: String(profile.portfolioProjectCount), icon: Package, color: "text-blue-400" },
   ];
 
+  const isNew = profile.reviewCount === 0 && profile.verifiedJobCount === 0 && profile.portfolioProjectCount === 0;
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Profile header */}
@@ -108,6 +99,35 @@ function ProfessionalDashboard() {
           </div>
         </div>
       </div>
+
+      {/* New user getting started prompt */}
+      {isNew && (
+        <div className="forge-card p-6 border-copper-800 bg-copper-950/20">
+          <h2 className="font-semibold text-charcoal-100 mb-1">Get started on FORGE</h2>
+          <p className="text-sm text-charcoal-400 mb-4">
+            Complete these steps to start getting discovered by customers.
+          </p>
+          <div className="space-y-3">
+            {[
+              { label: "Complete your profile", done: !!profile.bio, href: "/profile/edit" },
+              { label: "Add your skills", done: profile.skills?.length > 0, href: "/profile/edit" },
+              { label: "Add a portfolio project", done: profile.portfolioProjectCount > 0, href: "/profile/edit" },
+              { label: "Set your availability", done: !!profile.availability, href: "/profile/edit" },
+            ].map(({ label, done, href }) => (
+              <Link
+                key={label}
+                to={href}
+                className="flex items-center gap-3 text-sm hover:text-charcoal-100 transition-colors"
+              >
+                <div className={`h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 ${done ? "border-green-500 bg-green-500" : "border-charcoal-600"}`}>
+                  {done && <CheckCircle2 className="h-3 w-3 text-white" aria-hidden="true" />}
+                </div>
+                <span className={done ? "text-charcoal-500 line-through" : "text-charcoal-300"}>{label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
