@@ -4,7 +4,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { FullPageSpinner } from "@/components/ui/Spinner";
 import { Avatar } from "@/components/ui/Avatar";
 import { Hammer, Search, Briefcase, MessageSquare, User, Menu, X, Shield } from "lucide-react";
-import { Hammer, Search, Briefcase, MessageSquare, User, Menu, X, Shield } from "lucide-react";
 import { NotificationBell } from "@/components/ui/NotificationBell";
 import { cn } from "@/lib/cn";
 import { UserRole } from "@forge/types";
