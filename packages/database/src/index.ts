@@ -6,4 +6,5 @@ export * from "./queries/reviews";
 export * from "./queries/reputation";
 export * from "./queries/search";
 export * from "./queries/admin";
+export * from "./queries/messages";
 export * from "./utils";

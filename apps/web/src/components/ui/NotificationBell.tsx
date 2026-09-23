@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { Bell } from "lucide-react";
+import { Bell, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { Link } from "@tanstack/react-router";
 import type { Notification } from "@forge/types";
 
 export function NotificationBell() {
@@ -12,11 +13,20 @@ export function NotificationBell() {
   const { data: notifications } = useQuery({
     queryKey: ["notifications"],
     queryFn: () => api.get<Notification[]>("/notifications"),
-    refetchInterval: 60_000, // Poll every 60s
+    refetchInterval: 60_000,
     retry: false,
   });
 
-  const unreadCount = notifications?.filter((n) => !n.isRead).length ?? 0;
+  const { data: msgUnread } = useQuery({
+    queryKey: ["messages", "unread-count"],
+    queryFn: () => api.get<{ count: number }>("/messages/unread-count"),
+    refetchInterval: 30_000,
+    retry: false,
+  });
+
+  const unreadCount =
+    (notifications?.filter((n) => !n.isRead).length ?? 0) +
+    (msgUnread?.count ?? 0);
 
   const markReadMutation = useMutation({
     mutationFn: (id: string) => api.post(`/notifications/${id}/read`),
@@ -66,6 +76,27 @@ export function NotificationBell() {
             </div>
 
             <div className="max-h-96 overflow-y-auto">
+              {/* Messages unread shortcut */}
+              {(msgUnread?.count ?? 0) > 0 && (
+                <Link
+                  to="/messages"
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-4 py-3 border-b border-charcoal-800 hover:bg-charcoal-800 transition-colors bg-charcoal-800/50"
+                >
+                  <div className="relative">
+                    <MessageSquare className="h-5 w-5 text-copper-400" aria-hidden="true" />
+                    <span className="absolute -top-1 -right-1 h-3.5 w-3.5 bg-copper-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                      {msgUnread!.count > 9 ? "9+" : msgUnread!.count}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-charcoal-100">
+                      {msgUnread!.count} unread message{msgUnread!.count !== 1 ? "s" : ""}
+                    </p>
+                    <p className="text-xs text-charcoal-400">Go to inbox</p>
+                  </div>
+                </Link>
+              )}
               {!notifications || notifications.length === 0 ? (
                 <div className="px-4 py-8 text-center">
                   <Bell className="h-8 w-8 text-charcoal-700 mx-auto mb-2" aria-hidden="true" />

@@ -116,6 +116,7 @@ export function ProfilePage() {
         <ContactModal
           professionalName={profile.businessName ?? profile.displayName}
           professionalSlug={profile.profileSlug}
+          professionalUserId={profile.userId}
           mode={contactMode}
           onClose={() => setContactMode(null)}
         />

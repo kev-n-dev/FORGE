@@ -1,21 +1,68 @@
 /**
- * Contact / Request Quote modal shown from public profile pages.
- * Phase 1: routes to messages (coming soon) with a clear explanation.
- * Phase 2: will open a real conversation thread.
+ * Contact / Request Quote modal — sends a real opening message to a professional.
+ * Starting a conversation navigates to /messages?conversation=<id>.
  */
-import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
-import { X, MessageSquare, FileText, ArrowRight } from "lucide-react";
+import { api, ApiClientError } from "@/lib/api";
+import { X, MessageSquare, FileText, ArrowRight, Send, AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/cn";
 
 interface ContactModalProps {
   professionalName: string;
   professionalSlug: string;
+  /** The professional's user ID — needed to address the message */
+  professionalUserId: string;
   mode: "contact" | "quote";
   onClose: () => void;
 }
 
-export function ContactModal({ professionalName, professionalSlug, mode, onClose }: ContactModalProps) {
+const QUOTE_TEMPLATE = `Hi, I'd like to request a quote for a project.
+
+Project description:
+
+Timeline:
+
+Budget:`;
+
+export function ContactModal({
+  professionalName,
+  professionalSlug,
+  professionalUserId,
+  mode,
+  onClose,
+}: ContactModalProps) {
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const [message, setMessage] = useState(mode === "quote" ? QUOTE_TEMPLATE : "");
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSend = async () => {
+    if (!message.trim()) return;
+    setSending(true);
+    setError("");
+    try {
+      const result = await api.post<{ conversationId: string; isNew: boolean }>(
+        "/messages/conversations",
+        {
+          recipientId: professionalUserId,
+          body: message.trim(),
+          metadata: mode === "quote" ? { type: "quote_request" } : { type: "text" },
+        }
+      );
+      onClose();
+      await navigate({
+        to: "/messages",
+        search: { conversation: result.conversationId },
+      });
+    } catch (e) {
+      setError(e instanceof ApiClientError ? e.message : "Failed to send message.");
+      setSending(false);
+    }
+  };
 
   return (
     <div
@@ -32,18 +79,18 @@ export function ContactModal({ professionalName, professionalSlug, mode, onClose
       />
 
       {/* Panel */}
-      <div className="relative forge-card w-full max-w-md p-6 space-y-5 animate-slide-up">
+      <div className="relative forge-card w-full max-w-lg p-6 space-y-5 animate-slide-up">
         {/* Header */}
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 id="contact-modal-title" className="text-lg font-semibold text-charcoal-100">
-              {mode === "quote" ? "Request a Quote" : "Contact Professional"}
+              {mode === "quote" ? "Request a Quote" : `Message ${professionalName}`}
             </h2>
             <p className="text-sm text-charcoal-400 mt-0.5">{professionalName}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-charcoal-500 hover:text-charcoal-200 hover:bg-charcoal-800 transition-colors"
+            className="p-1.5 rounded-lg text-charcoal-500 hover:text-charcoal-200 hover:bg-charcoal-800 transition-colors shrink-0"
             aria-label="Close"
           >
             <X className="h-5 w-5" aria-hidden="true" />
@@ -51,12 +98,12 @@ export function ContactModal({ professionalName, professionalSlug, mode, onClose
         </div>
 
         {!isAuthenticated ? (
-          // Not logged in — prompt to sign up / sign in
+          /* Not logged in */
           <div className="space-y-4">
             <p className="text-sm text-charcoal-400 leading-relaxed">
-              Create a free account to contact{" "}
-              <span className="text-charcoal-200 font-medium">{professionalName}</span> and
-              keep a record of your conversation.
+              Create a free account to message{" "}
+              <span className="text-charcoal-200 font-medium">{professionalName}</span>.
+              All messages are kept in your inbox.
             </p>
             <div className="space-y-2">
               <Link
@@ -78,39 +125,67 @@ export function ContactModal({ professionalName, professionalSlug, mode, onClose
             </div>
           </div>
         ) : (
-          // Logged in — messaging is Phase 2
+          /* Logged in — compose message */
           <div className="space-y-4">
-            <div className="flex gap-3 bg-charcoal-800 rounded-lg p-4">
-              {mode === "quote"
-                ? <FileText className="h-5 w-5 text-copper-400 shrink-0 mt-0.5" aria-hidden="true" />
-                : <MessageSquare className="h-5 w-5 text-copper-400 shrink-0 mt-0.5" aria-hidden="true" />}
-              <div>
-                <p className="text-sm font-medium text-charcoal-100">
-                  {mode === "quote" ? "Quote requests" : "In-platform messaging"} coming soon
-                </p>
-                <p className="text-sm text-charcoal-400 mt-1 leading-relaxed">
-                  Direct messaging is launching in the next phase. In the meantime,
-                  check the professional's profile for a website or contact link.
-                </p>
+            {error && (
+              <div className="flex items-center gap-2 bg-red-900/30 border border-red-800 rounded-lg p-3 text-sm text-red-300">
+                <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+                {error}
               </div>
+            )}
+
+            {/* Mode indicator */}
+            <div className={cn(
+              "flex items-center gap-2 text-xs font-medium px-3 py-2 rounded-lg border",
+              mode === "quote"
+                ? "bg-copper-900/20 border-copper-800 text-copper-300"
+                : "bg-charcoal-800 border-charcoal-700 text-charcoal-400"
+            )}>
+              {mode === "quote"
+                ? <FileText className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                : <MessageSquare className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />}
+              {mode === "quote"
+                ? "Quote request — fill in your project details below"
+                : "Direct message"}
             </div>
 
-            {/* Show website link if available */}
-            <div className="space-y-2">
-              <Link
-                to="/messages"
-                className="forge-btn-primary w-full inline-flex justify-center"
-                onClick={onClose}
+            {/* Message textarea */}
+            <div>
+              <label htmlFor="contact-message" className="forge-label">
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                rows={mode === "quote" ? 8 : 4}
+                maxLength={4000}
+                placeholder={mode === "contact" ? `Say hello to ${professionalName}…` : undefined}
+                className="forge-input resize-none mt-1.5 w-full"
+                autoFocus
+              />
+              <p className="text-xs text-charcoal-500 mt-1 text-right">
+                {message.length}/4000
+              </p>
+            </div>
+
+            <p className="text-xs text-charcoal-500 leading-relaxed">
+              Your message will be delivered to {professionalName}'s inbox. They can
+              respond from their messages page.
+            </p>
+
+            <div className="flex gap-3 justify-end">
+              <Button variant="secondary" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                onClick={() => void handleSend()}
+                loading={sending}
+                disabled={!message.trim()}
               >
-                <MessageSquare className="h-4 w-4" aria-hidden="true" />
-                Go to Messages
-              </Link>
-              <button
-                onClick={onClose}
-                className="forge-btn-ghost w-full text-sm"
-              >
-                Close
-              </button>
+                <Send className="h-4 w-4" aria-hidden="true" />
+                Send message
+              </Button>
             </div>
           </div>
         )}

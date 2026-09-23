@@ -16,3 +16,4 @@ export * from "./notification";
 export * from "./search";
 export * from "./api";
 export * from "./enums";
+export * from "./message";

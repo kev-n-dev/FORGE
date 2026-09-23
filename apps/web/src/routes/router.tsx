@@ -54,6 +54,9 @@ const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
   component: LoginPage,
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirect: typeof search["redirect"] === "string" ? search["redirect"] : undefined,
+  }),
 });
 
 const registerRoute = createRoute({
@@ -111,6 +114,9 @@ const messagesRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/messages",
   component: MessagesPage,
+  validateSearch: (search: Record<string, unknown>) => ({
+    conversation: typeof search["conversation"] === "string" ? search["conversation"] : undefined,
+  }),
 });
 
 const profileSetupRoute = createRoute({
